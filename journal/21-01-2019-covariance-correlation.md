@@ -1,10 +1,10 @@
 Description: A summary of covariance and correlation
 References: 
-  - [1] Correlation and dependence: https://en.wikipedia.org/wiki/Correlation_and_dependence
-  - [2] What Is Correlation?: https://www.youtube.com/watch?v=Ypgo4qUBt5o
-  - [3] Understanding Covariance: https://www.youtube.com/watch?v=xGbpuFNR1ME&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=6
-  - [4] The Covariance Matrix: https://www.youtube.com/watch?v=locZabK4Als&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=7
-  - [5] Understanding Correlation: https://www.youtube.com/watch?v=4EXNedimDMs&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=8
+  - [1] [Correlation and dependence](https://en.wikipedia.org/wiki/Correlation_and_dependence) 
+  - [2] [What Is Correlation?](https://www.youtube.com/watch?v=Ypgo4qUBt5o)
+  - [3] [Understanding Covariance](https://www.youtube.com/watch?v=xGbpuFNR1ME&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=6) 
+  - [4] [The Covariance Matrix](https://www.youtube.com/watch?v=locZabK4Als&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=7)
+  - [5] [Understanding Correlation](https://www.youtube.com/watch?v=4EXNedimDMs&list=PLIeGtxpvyG-JMH5fGDWhtniyET88Mexcw&index=8) 
 
 ### Covariance [3]
 - bivariate relationships: relationships that involve aspects of two variables
