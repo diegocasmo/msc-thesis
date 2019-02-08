@@ -1,4 +1,5 @@
 Description: A summary of covariance and correlation
+
 References: 
   - [1] [Correlation and dependence](https://en.wikipedia.org/wiki/Correlation_and_dependence) 
   - [2] [What Is Correlation?](https://www.youtube.com/watch?v=Ypgo4qUBt5o)

@@ -1,4 +1,5 @@
 Description: A summary of the first chapter of the book Recommender Systems by Charu C. Aggarwal
+
 Reference: Aggarwal C.C. (2016) An Introduction to Recommender Systems. In: Recommender Systems. Springer, Cham
 
 ### 1.1 An Introduction to Recommender Systems
