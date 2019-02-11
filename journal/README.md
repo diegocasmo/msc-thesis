@@ -8,3 +8,4 @@ This directory contains summaries and notes of resources I used to inform myself
 - [Covariance and Correlation](./21-01-2019-covariance-correlation.md)
 - [USNO-B1.0 Catalog](./08-02-2019-usno-b1.0-catalog.md)
 - [Panoramic Survey Telescope and Rapid Response System (Pan-STARRS)](./08-02-2019-pan-starrs.md)
+- [Blink Comparator](./11-02-2019-blink-comparator.md)
