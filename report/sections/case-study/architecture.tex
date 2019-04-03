@@ -1,0 +1,6 @@
+\subsection{Architecture} \label{subsect:case-study:arch}
+% Introduction to overall architecture 
+% Why two separate applications?
+The following section motivates and outlines the architecture choices made in order to create the tools required to conduct the case study. The software required to perform the case study is split into two independent applications. The first application focuses in user interaction and experience, referred to as the \mlblink User Interface (\mlblinkui), and the second one is in charge of dealing with business logic and providing the required resources to the \mlblinkui, referred to as the \mlblink Application Programming Interface (\mlblinkapi). Through out the report, these two applications are also described as the client and server respectively.
+
+While the two applications could have been developed as a monolith, having two decoupled applications allows to clearly distinguish between client responsibilities and business logic. In the other hand, splitting the project into two separate applications comes with a higher operational overhead. For instance, deploying a new feature could require rolling out a new version of both the client and the server, while taking into account that and older version of the client might be cached in the user's browser.
