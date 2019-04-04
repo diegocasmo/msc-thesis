@@ -1,4 +1,7 @@
 \subsubsection{Client Architecture} \label{subsubsect:case-study:arch:client}
-% >> ML-Blink UI
-% >>> Vue CLI
-% >>> Vue
+
+The \mlblinkui is entirely written in JavaScript. Since the UI allows for quite complex user interaction, the \texttt{Vue.js} framework -- an open-source JavaScript framework for building user interfaces -- is used as the view layer to develop the user interface. Additionally, the application uses the Vue Command Line Interface (Vue CLI) to make local development, scaffolding, and deployment easier.
+
+The \mlblinkui communicates with the \mlblinkapi through AJAX calls that closely follow the REST standard, as pointed out in section \ref{subsubsect:case-study:arch:server}. These AJAX calls request the required data and resources to show to the user in the UI, as well as send data created by the user while using the UI to the \mlblinkapi to be persisted in the database.
+
+Lastly, similar to the \mlblinkapi, the \mlblinkui is hosted in its own server running in \ubuntu, and it uses the Apache HTTP server to serve requested resources as well.
