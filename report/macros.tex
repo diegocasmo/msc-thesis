@@ -1,7 +1,11 @@
+\usepackage{graphicx}
 \usepackage{float}
 \usepackage{xspace}
-\usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{titlesec}
 
 % Acronyms
 \newcommand{\vasco}{VASCO\xspace}
@@ -19,8 +23,16 @@
  % Methodologies
  \newcommand{\rest}{REST\xspace}
 
+% Datasets
 \newcommand{\usno}{USNO-B1.0\xspace}
-
+\newcommand{\panstarrs}{Pan--STARRS1\xspace}
 
 % Custom commands
 \newcommand{\blankpage}{\clearpage\mbox{}\clearpage}
+
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
