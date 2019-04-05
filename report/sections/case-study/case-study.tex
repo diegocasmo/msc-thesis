@@ -1,12 +1,6 @@
 \section{Case Study} \label{sect:case-study}
-% > Introduction to Case Study
-
-% What is USNO-B1.0?
-% \usno is an all-sky catalog composed from multiple sky surveys during the interval from 1949 to 2002 \cite{web:caltech:usno} that indicates positions, proper motions, star/galaxy estimators and other astronomical features for 1,042,618,261 objects derived from 3,643,201,733 distinct observations \cite{web:ap-i:usno}.
-
-% TODO: What is Pan-STARRS1?
-
-% > Overall idea of the case study
+% Introduction
+\input{report/sections/case-study/introduction.tex}
 
 % Architecture overview
 \input{report/sections/case-study/architecture.tex}
@@ -14,17 +8,6 @@
 \input{report/sections/case-study/client-architecture.tex}
 
 % Implementation
-
-% ML-Blink UI
-% > Image matching
-% > ROI
-% > Using correlation to compute accuracy
-% > Using image subtraction to compute accuracy
-
-% ML-Blink API
-% > Explicit representation
-% > Implicit representation
-% > Active set
-% > Crawling potential candidates
-% > Selecting candidate
-% > Potential anomalies
+\input{report/sections/case-study/implementation.tex}
+\input{report/sections/case-study/implementation-ml-blink-ui.tex}
+\input{report/sections/case-study/implementation-ml-blink-api.tex}
