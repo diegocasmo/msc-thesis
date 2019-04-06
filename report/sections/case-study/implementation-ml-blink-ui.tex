@@ -101,9 +101,9 @@ The next step is to binarize the smoothed pixel value intensities of each image'
 \end{figure}
 
 \paragraph{Object Detection} \label{paragraph:case-study:impl:objects}
-The binarized ROI are then fed through an object detection algorithm. The object detection algorithm uses the idea of connected components to label all pixels connected to an object before proceeding with the next pixel. Since the input image is binarized, any object to be identified must have a pixel value intensity of 255. 
+The binarized ROI are then fed through an object detection algorithm. The object detection algorithm uses connected components to label all pixels connected to an object before proceeding with the next pixel. Since the input image is binarized, any object to be identified must have a pixel value intensity of 255. 
 
-The algorithm works by traversing the input array from left to right using a kernel of size $3 \times 3$. If any unlabeled element within the kernel is considered to be an object, the label for such object is either generated (if no neighbor has already been labeled), or the label of any of its neighbors is used instead. A queue data structure is used to keep track of the neighbors for follow-up labelling. Only once all the neighbors have been labeled (the queue is empty), the algorithm continues with the next pixel.
+The algorithm works by first filtering the entire array of pixels by those which are catalog as an object. Once these have been found, a kernel of size $3 \times 3$ placed on top of such pixels is used to find its neighbors. The neighbors are then filtered by those that are objects and have not been labeled yet. Following that, each of these neighbors are labeled using the label of that connected component, and kept track of in a queue data structure for follow up labelling. Only once all these neighbors have been labeled (i.e. the queue is empty), the algorithm continues with the next pixel value intensity cataloged as an object.
 
 Figure \ref{fig:mission-0:objects} shows the connected components found by the object detection algorithm in each of the images' ROI.
 
@@ -134,11 +134,11 @@ Figure \ref{fig:mission-0:objects} shows the connected components found by the o
 \end{figure}
 
 \paragraph{Object Size Normalization} \label{paragraph:case-study:impl:object-normalization}
-The objects detected within each image's ROI are then normalized by replacing each of them by an equal sized square object. \usno objects are replaced by squares of size $9 \times 9$, while objects of size $13 \times 13$ for \panstarrs objects were found to result in a more intuitive score in the UI. 
+The objects detected within each image's ROI are then normalized by replacing each of them by an equal sized square object. \usno objects are replaced by squares of size $9$, while objects of size $13$ for \panstarrs were found to result in a more intuitive score in the UI. 
 
-The object normalization algorithm takes the labeled objects as in figure \ref{fig:mission-0:objects}, and for each of them, computes its center of mass. The center of mass is calculated for the $x$--axis and $y$--axis in a similar way. The $x$--axis center of mass is computed by adding the row of each pixel defined within an object and dividing the resulting total by the number of pixels the object has. The same procedure is performed for the $y$--axis center of mass, but adding the column of each pixel defined within the object instead. 
+The object normalization algorithm takes the labeled objects as in figure \ref{fig:mission-0:objects}, and for each of them, computes its center of mass. The center of mass is calculated for the $x$--axis and $y$--axis in a similar way. The $x$--axis center of mass is computed by adding the row of each pixel defined within an object and dividing the resulting total by the number of pixels the object has. The same procedure is performed for the $y$--axis center of mass, but adding the column of each pixel defined within the object instead. Once the center of mass has been computed in both axis, a squared object of a specified size is placed on top of the object's center of mass. 
 
-Once the center of mass has been computed in both axis, a squared object of a specified size is placed on top of the object's center of mass. Figure \ref{fig:mission-0:equal-sized-objects} shows the resulting square objects after both the \usno and \panstarrs images' ROI objects size have been normalized.
+Figure \ref{fig:mission-0:equal-sized-objects} shows the resulting square objects after both the \usno and \panstarrs images' ROI objects size have been normalized.
 
 \begin{figure}[H]
     \centering
@@ -162,7 +162,7 @@ Once the center of mass has been computed in both axis, a squared object of a sp
       \caption{Equal sized objects in \panstarrs}
       \label{fig:b:panstarr-0-g-equal-sized-objects}
     \end{subfigure}
-    \caption{Original objects from figure \ref{fig:mission-0:objects} replaced by equal sized objects in both \usno (figure \ref{fig:a:usno-0-blue1-equal-sized-objects}), and \panstarrs (figure \ref{fig:b:panstarr-0-g-equal-sized-objects}). Squared objects of size $9 \times 9$ are used for \usno images and $13 \times 13$ for \panstarrs images.}
+    \caption{Original objects from figure \ref{fig:mission-0:objects} replaced by equal sized objects in both \usno (figure \ref{fig:a:usno-0-blue1-equal-sized-objects}), and \panstarrs (figure \ref{fig:b:panstarr-0-g-equal-sized-objects}). Squared objects of size $9$ are used for \usno images and $13$ for \panstarrs images.}
     \label{fig:mission-0:equal-sized-objects}
 \end{figure}
 
