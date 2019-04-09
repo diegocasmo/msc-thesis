@@ -1,7 +1,59 @@
 \subsubsection{\mlblinkapi} \label{subsubsect:case-study:impl:ml-blink-api}
-% > Explicit representation
-% > Implicit representation
-% > Active set
-% > Crawling potential candidates
-% > Selecting candidate
-% > Potential anomalies
+
+\paragraph{The \mlblink Algorithm} \label{paragraph:case-study:impl:mlblink}
+
+% Explicit representation
+% Implicit representation
+% Normalization
+% Dimensionality reduction
+
+\paragraph{The Active Set} \label{paragraph:case-study:impl:active-set}
+The active set is a collection persisted in MongoDB compromised of missions which are considered to be ``normal''. Table \ref{table:case-study:impl:active-set:schema} shows the schema definition of a document of the active set.
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{| l | l |} 
+            \hline
+                \texttt{image\_key} & An integer which identifies an image \\
+            \hline
+                \texttt{usno\_band} & The \usno band of the image \\
+            \hline
+                \texttt{panstarr\_band} & The \panstarrs band of the image \\
+            \hline
+                \texttt{usno\_vector}  & \multicolumn{1}{m{8cm}|}{The resulting vector after processing the original \usno image as described in section \ref{paragraph:case-study:impl:mlblink}} \\
+            \hline
+                \texttt{panstarr\_vector} & \multicolumn{1}{m{8cm}|}{The resulting vector after processing the original \panstarrs image as described in section \ref{paragraph:case-study:impl:mlblink}} \\
+            \hline
+        \end{tabular}
+    \caption{A description of the schema of a document of the active set collection.}
+    \label{table:case-study:impl:active-set:schema}
+\end{table}
+
+When a user submits a mission in the \mlblinkui, its data is received by the \mlblinkapi and persisted in the database. Following that, a background task is created to further determine what to do with it. 
+
+The background task, named \texttt{tprocess\_created\_mission}, is in charge of defining whether a mission's data should be added to the active set or not. A mission is added to the active set if its~\texttt{accuracy} achieved in the \mlblinkui is at least as good as its~\texttt{accuracy\_threshold}. Additionally, the mission's data is analyzed to determine whether the user tried to at least do a matching by verifying whether the two images coordinates overlap (i.e. one image is placed on top of the other). Finally, if a mission's data is successfully inserted in the active set collection, the \texttt{tcrawl\_candidates} task is called to crawl a new candidate mission. 
+
+\paragraph{Potential Anomalies} \label{paragraph:case-study:impl:potential-anomalies}
+
+The \texttt{tprocess\_created\_mission} is also in charge of inserting missions in the potential anomalies collection. A mission is added to the potential anomalies collection when a mission's~\texttt{accuracy} is less than its~\texttt{accuracy\_threshold}. Additionally, the data of a mission's is analyzed to determine whether the two images overlap. 
+
+In this scenario, the \texttt{tcrawl\_candidates} task is not called. The schema definition of a potential anomaly is shown in table~\ref{table:case-study:impl:potential-anomalies:schema}. Its definition is similar to that of a document of the active set, but it differs in that it does not define the pre--processed vectors of the \usno and \panstarrs image specified by the \texttt{image\_key}, \texttt{usno\_band}, and \texttt{panstarr\_band} attributes.
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{| l | l |} 
+            \hline
+                \texttt{image\_key} & An integer which identifies an image \\
+            \hline
+                \texttt{usno\_band} & The \usno band of the image \\
+            \hline
+                \texttt{panstarr\_band} & The \panstarrs band of the image \\
+            \hline
+        \end{tabular}
+    \caption{A description of the schema of a document of the potential anomalies collection.}
+    \label{table:case-study:impl:potential-anomalies:schema}
+\end{table}
+
+\paragraph{Crawling Candidates} \label{paragraph:case-study:impl:crawling-candidates}
+
+\paragraph{Selecting a Candidate} \label{paragraph:case-study:impl:selecting-candidates}
