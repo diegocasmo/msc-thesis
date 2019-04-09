@@ -2,10 +2,11 @@
 
 \paragraph{The \mlblink Algorithm} \label{paragraph:case-study:impl:mlblink}
 
-% Explicit representation
-% Implicit representation
-% Normalization
-% Dimensionality reduction
+\todo[inline]{TODO: Explicit representation}
+\todo[inline]{TODO: Implicit representation}
+\todo[inline]{TODO: Normalization}
+\todo[inline]{TODO: Dimensionality reduction}
+\todo[inline]{TODO: Write pseudo-code somewhere}
 
 \paragraph{The Active Set} \label{paragraph:case-study:impl:active-set}
 The active set is a collection persisted in MongoDB compromised of missions which are considered to be ``normal''. Table \ref{table:case-study:impl:active-set:schema} shows the schema definition of a document of the active set.
@@ -56,4 +57,27 @@ In this scenario, the \texttt{tcrawl\_candidates} task is not called. The schema
 
 \paragraph{Crawling Candidates} \label{paragraph:case-study:impl:crawling-candidates}
 
-\paragraph{Selecting a Candidate} \label{paragraph:case-study:impl:selecting-candidates}
+The \texttt{tcrawl\_candidates} background task uses the Celery ``chord'' API to crawl for candidates. The Celery chord API allows to execute a task once a group of other parallel tasks have finished.
+
+The \texttt{tcrawl\_candidates} generates a list of image keys to analyze over all five bands defined among the two datasets. This list is refereed to as the potential candidates list, since it contains the candidate that will be selected when the algorithm finishes. Missions which are known to be potential anomalies are filtered out of this list, since these have already been tagged for further analysis.
+
+Once the potential candidates list has been generated and filtered, it is split into the available number of processes the machine where the \mlblinkapi is running has. Each chunk is then processed in parallel by a different Celery worker. These workers compute the value of \texttt{v} for each potential candidate in its chunk using the implicit definition described in section \ref{paragraph:case-study:impl:mlblink}. 
+
+Finally, once all chunks have been processed, a task is used to ``reduce'' the result, by retrieving the potential candidate that has the lowest \texttt{v} value among all the potential candidates analyzed by the different Celery workers. Since it is the most different to those in the active set (and therefore most likely to contain an anomaly), this candidate is inserted in the candidates collection. Table \ref{table:case-study:impl:candidates:schema} shows the schema definition of a document of the candidates collection.
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{| l | l |} 
+            \hline
+                \texttt{image\_key} & An integer which identifies an image \\
+            \hline
+                \texttt{usno\_band} & The \usno band of the image \\
+            \hline
+                \texttt{panstarr\_band} & The \panstarrs band of the image \\
+            \hline
+                \texttt{v} & \multicolumn{1}{m{8cm}|}{The \texttt{v} value of this candidate computed by the AI--Crawler} \\
+            \hline
+        \end{tabular}
+    \caption{A description of the schema of a document of the candidates collection.}
+    \label{table:case-study:impl:candidates:schema}
+\end{table}

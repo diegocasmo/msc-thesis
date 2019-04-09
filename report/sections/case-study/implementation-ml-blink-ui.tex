@@ -37,7 +37,9 @@ In order to better illustrate how the matching algorithm works, the following su
 As the user moves or transforms the \panstarrs image in the UI, the following debounced steps are executed:
 
 \paragraph{ROI} \label{paragraph:case-study:impl:roi}
-% TODO: Ask Kristiaan for source stating that there is an object in the middle
+
+\todo[inline]{TODO: Why a ROI?}
+
 The ROI is defined as a square of 200 pixels placed on top of the center of the \usno image. The resulting ROI of the \usno image is shown in figure \ref{fig:a:usno-0-blue1-roi}. The ROI of the \panstarrs image is defined from the exact location, which means that in order to match the two images, the user must place the \panstarrs on top of the \usno image, otherwise the resulting ROI will be completely dark (i.e. no pixels from the \panstarrs image were found in the same location as the \usno ROI). Figure \ref{fig:b:panstarr-0-g-roi} shows the resulting ROI of the \panstarrs image as if it was positioned exactly on top of the \usno image in the UI.
 
 \begin{figure}[H]
