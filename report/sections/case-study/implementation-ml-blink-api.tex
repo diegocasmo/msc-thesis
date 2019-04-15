@@ -5,7 +5,7 @@
 \todo[inline]{TODO: Explicit representation}
 \todo[inline]{TODO: Implicit representation}
 \todo[inline]{TODO: Normalization}
-\todo[inline]{TODO: Dimensionality reduction}
+\todo[inline]{TODO: Dimensionality reduction (projections? convolution--based representation?)}
 \todo[inline]{TODO: Write pseudo-code somewhere}
 
 \paragraph{The Active Set} \label{paragraph:case-study:impl:active-set}
@@ -36,9 +36,9 @@ The background task, named \texttt{tprocess\_created\_mission}, is in charge of 
 
 \paragraph{Potential Anomalies} \label{paragraph:case-study:impl:potential-anomalies}
 
-The \texttt{tprocess\_created\_mission} is also in charge of inserting missions in the potential anomalies collection. A mission is added to the potential anomalies collection when a mission's~\texttt{accuracy} is less than its~\texttt{accuracy\_threshold}. Additionally, the data of a mission's is analyzed to determine whether the two images overlap. 
+The \texttt{tprocess\_created\_mission} is also in charge of inserting missions in the potential anomalies collection. A mission is added to the potential anomalies collection when a mission's~\texttt{accuracy} is less than its~\texttt{accuracy\_threshold} and the mission's images overlap. If a mission is classified as a potential anomaly, the \texttt{tcrawl\_candidates} task is not called.
 
-In this scenario, the \texttt{tcrawl\_candidates} task is not called. The schema definition of a potential anomaly is shown in table~\ref{table:case-study:impl:potential-anomalies:schema}. Its definition is similar to that of a document of the active set, but it differs in that it does not define the pre--processed vectors of the \usno and \panstarrs image specified by the \texttt{image\_key}, \texttt{usno\_band}, and \texttt{panstarr\_band} attributes.
+The schema definition of a potential anomaly is shown in table~\ref{table:case-study:impl:potential-anomalies:schema}. Its definition is similar to that of a document of the active set, but it differs in that it does not define the pre--processed vectors of the \usno and \panstarrs image specified by the \texttt{image\_key}, \texttt{usno\_band}, and \texttt{panstarr\_band} attributes.
 
 \begin{table}[H]
     \centering
