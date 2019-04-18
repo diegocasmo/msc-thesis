@@ -1,0 +1,29 @@
+\subsection{Explicit Representation} \label{subsect:meth:explicit}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwProg{FMain}{compute\_v\_explicit}{:}{end}
+        \FMain{$i$, $j$} {
+            Let $i$ be an image key, and $j$ be an image band \\
+            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
+            Retrieve weights matrix $\mat{D}$ \\
+            Compute $v = \vect{x}^T \mat{D} \vect{y}$ \\
+            \Return $v$
+        }
+    \caption{Pseudo--code for computing the value $v$ for a mission setup using the explicit definition of the matrix $\mat{D}$.}
+    \label{pscode:compute-v:explicit}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwProg{FMain}{update\_d\_explicit}{:}{end}
+        \FMain{$i$, $j$} {
+            Let $i$ be an image key, and $j$ be an image band \\
+            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
+            $\mat{D} \gets \mat{D} + \vect{x}\vect{y}^T$ \\
+        }
+    \caption{Pseudo--code for updating the explicit representation of the matrix $\mat{D}$.}
+    \label{pscode:update-d:explicit}
+\end{algorithm}
