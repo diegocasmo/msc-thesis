@@ -4,6 +4,7 @@ An arrangement of two images from the same location of the night sky from distin
 
 Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to crawl for a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned. Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
 
+\vspace{0.4cm}
 \begin{algorithm}[H]
     \SetAlgoLined
     \SetKwProg{FMain}{ml\_blink}{:}{end}
@@ -17,5 +18,6 @@ Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what 
     \caption{Pseudo--code for the basic building block of the \mlblink algorithm.}
     \label{pscode:ml-blink:explicit}
 \end{algorithm}
+\vspace{0.4cm}
 
 After a set of missions has been selected, computing their corresponding $v$ value is what will differ depending on how the weights learned by the algorithm are represented.

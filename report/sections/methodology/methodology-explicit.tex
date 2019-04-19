@@ -4,6 +4,7 @@ The explicit representation of the learned weights simply stores these weights i
 
 Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a mission setup will return the $v$ value of such mission. It is important to note that the very first time the matrix $\mat{D}$ is retrieved, all of its weights are equal to $0$ (i.e. it has not learned anything yet), and therefore any mission given to it will return a $v$ value equal to $0$.
 
+\vspace{0.4cm}
 \begin{algorithm}[H]
     \SetAlgoLined
     \SetKwProg{FMain}{compute\_v\_explicit}{:}{end}
@@ -18,9 +19,11 @@ Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a missi
     \caption{Pseudo--code for computing the value $v$ for a mission setup using the explicit definition of the matrix $\mat{D}$.}
     \label{pscode:compute-v:explicit}
 \end{algorithm}
+\vspace{0.4cm}
 
-Algorithm \ref{pscode:update-d:explicit} shows how the weights of the matrix $\mat{D}$ are updated in order to learn new information. When a mission needs to be learned, the matrix $\mat{D}$ is updated as follows: $\mat{D} \gets \mat{D} + \vect{x}\vect{y}^T$.
+Algorithm \ref{pscode:update-d:explicit} shows how the weights of the matrix $\mat{D}$ are updated in order to learn new information.
 
+\vspace{0.4cm}
 \begin{algorithm}[H]
     \SetAlgoLined
     \SetKwProg{FMain}{update\_d\_explicit}{:}{end}
@@ -33,5 +36,6 @@ Algorithm \ref{pscode:update-d:explicit} shows how the weights of the matrix $\m
     \caption{Pseudo--code for updating the explicit representation of the matrix $\mat{D}$.}
     \label{pscode:update-d:explicit}
 \end{algorithm}
+\vspace{0.4cm}
 
 The weights learned by the \mlblink algorithm must be persisted in order for multiple crawlers to be able to read and write from the matrix $\mat{D}$ at different time steps. Even though the explicit representation using the matrix $\mat{D}$ provides a simple way to describe what the algorithm has learned and how it can be used to learn new information, storing, retrieving, and updating such weights might represent a performance issue depending on the size of the vectors $\vect{x}$ and $\vect{y}$.
