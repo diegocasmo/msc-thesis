@@ -2,7 +2,6 @@
 
 The \mlblinkapi implements the \mlblink algorithm as described in section \ref{sect:meth} using \python. It uses the MongoDB database in order to persist data, and the Celery asynchronous task queue to schedule and execute time consuming operations. The \mlblink algorithm implementation can be split into three parts: the active set (\ref{paragraph:case-study:impl:active-set}), potential anomalies (\ref{paragraph:case-study:impl:potential-anomalies}), and crawling candidates (\ref{paragraph:case-study:impl:crawling-candidates}).
 
-
 \paragraph{The Active Set} \label{paragraph:case-study:impl:active-set}
 The active set is a collection persisted in MongoDB compromised of missions which are considered to be non-anomalies. Table \ref{table:case-study:impl:active-set:schema} shows the schema definition of a document of the active set.
 
