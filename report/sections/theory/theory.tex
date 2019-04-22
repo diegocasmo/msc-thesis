@@ -1,16 +1,5 @@
-\section{Theory} \label{sect:theory}
+\chapter{Theory} \label{ch:theory}
 
-\subsection{The \mlblink Algorithm} \label{sect:theory:ml-blink}
-
-% Let $\vect{x}$ and $\vect{y}$ represent two images of the same location of the night sky from distinct datasets encoded as vectors. The goal is then to create a scoring function which is able to recommend objects that are more likely to contain an anomaly than those that are not. Let the scoring function be defined as in equation ~\ref{eq:v-explicit}, where $\vect{D}$ is the matrix that needs to be learned.
-
-% \begin{equation} \label{eq:v-explicit}
-%   v = \vect{x}^T \vect{D} \vect{y}  
-% \end{equation}
-
-\todo[inline]{TODO: Define vectors $\vect{x}$ and $\vect{y}$}
-\todo[inline]{TODO: Define weights matrix $\vect{D}$}
-\todo[inline]{TODO: ``Flesh--out'' $v = \vect{x}^T \vect{D} \vect{y}$}
-\todo[inline]{TODO: Explain intuitively what does each element of $\vect{D}$ mean}
-\todo[inline]{TODO: Define active learning}
-\todo[inline]{TODO: Define supervised learning}
+\input{report/sections/theory/supervised-learning.tex}
+\input{report/sections/theory/active-learning.tex}
+\input{report/sections/theory/ml-blink-algorithm.tex}

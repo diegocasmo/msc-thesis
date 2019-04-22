@@ -1,8 +1,8 @@
-\subsubsection{\mlblinkapi} \label{subsubsect:case-study:impl:ml-blink-api}
+\subsection{\mlblinkapi} \label{subsect:case-study:impl:ml-blink-api}
 
-The \mlblinkapi implements the \mlblink algorithm as described in section \ref{sect:meth} using \python. It uses the MongoDB database in order to persist data, and the Celery asynchronous task queue to schedule and execute time consuming operations. The \mlblink algorithm implementation can be split into three parts: the active set (\ref{paragraph:case-study:impl:active-set}), potential anomalies (\ref{paragraph:case-study:impl:potential-anomalies}), and crawling candidates (\ref{paragraph:case-study:impl:crawling-candidates}).
+The \mlblinkapi implements the \mlblink algorithm as described in section \ref{ch:meth} using \python. It uses the MongoDB database in order to persist data, and the Celery asynchronous task queue to schedule and execute time consuming operations. The \mlblink algorithm implementation can be split into three parts: the active set (\ref{subsubsect:case-study:impl:active-set}), potential anomalies (\ref{subsubsect:case-study:impl:potential-anomalies}), and crawling candidates (\ref{subsubsect:case-study:impl:crawling-candidates}).
 
-\paragraph{The Active Set} \label{paragraph:case-study:impl:active-set}
+\subsubsection{The Active Set} \label{subsubsect:case-study:impl:active-set}
 The active set is a collection persisted in MongoDB compromised of missions which are considered to be non-anomalies. Table \ref{table:case-study:impl:active-set:schema} shows the schema definition of a document of the active set.
 
 \begin{table}[H]
@@ -28,7 +28,7 @@ When a user submits a mission in the \mlblinkui, its data is received by the \ml
 
 The background task, named \texttt{tprocess\_created\_mission}, is in charge of defining whether a mission's data should be added to the active set or not. A mission is added to the active set if its~\texttt{accuracy} achieved in the \mlblinkui is at least as good as its~\texttt{accuracy\_threshold}. Additionally, the mission's data is analyzed to determine whether the user tried to at least do a matching by verifying whether the two images coordinates overlap (i.e. one image is placed on top of the other). Finally, if a mission's data is successfully inserted in the active set collection, the \texttt{tcrawl\_candidates} task is called to crawl a new candidate mission. 
 
-\paragraph{Potential Anomalies} \label{paragraph:case-study:impl:potential-anomalies}
+\subsubsection{Potential Anomalies} \label{subsubsect:case-study:impl:potential-anomalies}
 
 The \texttt{tprocess\_created\_mission} is also in charge of inserting missions in the potential anomalies collection. A mission is added to the potential anomalies collection when a mission's~\texttt{accuracy} is less than its~\texttt{accuracy\_threshold} and the mission's images overlap. If a mission is classified as a potential anomaly, the \texttt{tcrawl\_candidates} task is not called.
 
@@ -49,13 +49,13 @@ The schema definition of a potential anomaly is shown in table~\ref{table:case-s
     \label{table:case-study:impl:potential-anomalies:schema}
 \end{table}
 
-\paragraph{Crawling Candidates} \label{paragraph:case-study:impl:crawling-candidates}
+\subsubsection{Crawling Candidates} \label{subsubsect:case-study:impl:crawling-candidates}
 
 The \texttt{tcrawl\_candidates} background task uses the Celery ``chord'' API to crawl for candidates. The Celery chord API allows to execute a task once a group of other parallel tasks have finished.
 
 The \texttt{tcrawl\_candidates} generates a list of image keys to analyze over all five bands defined among the two datasets. This list is refereed to as the potential candidates list, since it contains the candidate that will be selected when the algorithm finishes. Missions which are known to be potential anomalies are filtered out of this list, since these have already been tagged for further analysis.
 
-Once the potential candidates list has been generated and filtered, it is split into the available number of processes the machine where the \mlblinkapi is running has. Each chunk is then processed in parallel by a different Celery worker. These workers compute the value of \texttt{v} for each potential candidate in its chunk using the implicit definition described in section \ref{subsect:meth:implicit}. 
+Once the potential candidates list has been generated and filtered, it is split into the available number of processes the machine where the \mlblinkapi is running has. Each chunk is then processed in parallel by a different Celery worker. These workers compute the value of \texttt{v} for each potential candidate in its chunk using the implicit definition described in section \ref{sect:meth:implicit}. 
 
 Finally, once all chunks have been processed, a task is used to ``reduce'' the result, by retrieving the potential candidate that has the lowest \texttt{v} value among all the potential candidates analyzed by the different Celery workers. Since it is the most different to those in the active set (and therefore most likely to contain an anomaly), this candidate is inserted in the candidates collection. Table \ref{table:case-study:impl:candidates:schema} shows the schema definition of a document of the candidates collection.
 
