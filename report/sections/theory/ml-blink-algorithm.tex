@@ -1,13 +1,67 @@
 \section{The \mlblink Algorithm} \label{sect:theory:ml-blink}
 
-% Let $\vect{x}$ and $\vect{y}$ represent two images of the same location of the night sky from distinct datasets encoded as vectors. The goal is then to create a scoring function which is able to recommend objects that are more likely to contain an anomaly than those that are not. Let the scoring function be defined as in equation ~\ref{eq:v-explicit}, where $\vect{D}$ is the matrix that needs to be learned.
+The main focus of this thesis is the study, implementation, and analysis of the \mlblink algorithm. The \mlblink algorithm was presented to me by my supervisor Kristiaan Pelckmans, and it was designed to recommend one item over another (i.e. a recommender system). The \mlblink algorithm will determine how to recommend items based on a criteria it will learn using online and semi--supervised learning techniques.
 
-% \begin{equation} \label{eq:v-explicit}
-%   v = \vect{x}^T \vect{D} \vect{y}  
-% \end{equation}
+Formally, consider a pair of vectors $\vect{x}$ and $\vect{y}$ that represent the same information, but taken from different sources during distinct times. The goal is then to create a scoring function which is able to recommend pair of items that are more likely to contain an anomaly than those that are not. Since each pair of items represents essentially the same information, a pair of items is considered to contain an anomaly when an something is present in one, but not in the other. Let the scoring function be defined as in equation ~\ref{eq:v-explicit}, where $\vect{D}$ is the matrix that contains the weights that need to be learned by the model.
 
-\todo[inline]{TODO: Define vectors $\vect{x}$ and $\vect{y}$}
-\todo[inline]{TODO: Define weights matrix $\vect{D}$}
-\todo[inline]{TODO: ``Flesh--out'' $v = \vect{x}^T \vect{D} \vect{y}$}
+\begin{equation} \label{eq:v-explicit}
+  v = \vect{x}^T \vect{D} \vect{y}  
+\end{equation}
+
+The value $v$ of any pair of items $\vect{x}$ and $\vect{y}$ is then defined as in equation \ref{eq:v-flesh-out}.
+
+\begin{equation} \label{eq:v-flesh-out}
+    v = 
+    \begin{bmatrix}
+        x_{1} & x_{2} & \cdots & x_{n_x} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        w_{1,1} & w_{1,2} & \cdots & w_{1,n_y} \\
+        w_{2,1} & w_{2,2} & \cdots & w_{2,n_y} \\
+        \vdots \\
+        w_{n_x,1} & w_{n_x,2} & \cdots & w_{n_x,n_y} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        y_{1} \\
+        y_{2} \\
+        \vdots  \\
+        y_{n_y} \\
+    \end{bmatrix}
+\end{equation}
+
+
+For the sake of readability, let us furthermore consider a pair of items $\vect{x}$ and $\vect{y}$ such that $n_x = 2$ and $n_y = 2$. The resulting formula is shown in equation \ref{eq:v-flesh-out:short}.
+
+\begin{equation} \label{eq:v-flesh-out:short}
+    \begin{split} 
+        v &= 
+            \begin{bmatrix}
+                x_{1} & x_{2} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                w_{1,1} & w_{1,2} \\
+                w_{2,1} & w_{2,2} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                y_{1} \\
+                y_{2} \\
+            \end{bmatrix} \\
+        &=
+            \begin{bmatrix}
+                x_{1}w_{1,1} + x_{2}w_{2,1} & x_{1}w_{1,2} + x_{2}w_{2,2} \\
+            \end{bmatrix}    
+            \begin{bmatrix}
+                y_{1} \\
+                y_{2} \\
+            \end{bmatrix} \\
+        &=
+            \begin{bmatrix}
+                y_{1}x_{1}w_{1,1} + y_{2}x_{1}w_{1,2} & y_{1}x_{2}w_{2,1} + y_{2}x_{2}w_{2,2} \\
+            \end{bmatrix} \\
+    \end{split}
+\end{equation}
+
 \todo[inline]{TODO: Explain intuitively what does each element of $\vect{D}$ mean}
+
 \todo[inline]{TODO: Explain how the \mlblink algorithm uses semi--supervised learning and active learning}
+%As mentioned earlier, the matrix $\vect{D}$ will be learned using a combination of online and semi--supervised learning techniques, where expert users will catalog multiple pair of items to determine whether these contain an anomaly or not. The \mlblink algorithm will use this interaction to learn what non--anomalies look like and encode their features in the matrix $\vect{D}$. 

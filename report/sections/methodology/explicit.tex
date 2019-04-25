@@ -1,6 +1,6 @@
 \section{Explicit Representation} \label{sect:meth:explicit}
 
-The explicit representation of the learned weights simply stores these weights in a matrix $\vect{D}$. The matrix $\vect{D}$ is then used to compute the value $v$ of a mission, as well as updating it to learn new information.
+The explicit representation of the learned weights simply stores these weights in a matrix $\vect{D}$ as shown in equation \ref{eq:v-explicit}. The matrix $\vect{D}$ is then used to compute the value $v$ of a mission, as well as updating it to learn new information.
 
 Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a mission setup will return the $v$ value of such mission. It is important to note that the very first time the matrix $\vect{D}$ is retrieved, all of its weights are equal to $0$ (i.e. it has not learned anything yet), and therefore any mission given to it will return a $v$ value equal to $0$.
 
