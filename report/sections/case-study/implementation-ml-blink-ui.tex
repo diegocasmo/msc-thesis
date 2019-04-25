@@ -1,10 +1,10 @@
 \subsection{\mlblinkui} \label{subsect:case-study:impl:ml-blink-ui}
 
-As described in section \ref{sect:case-study:intro}, the \mlblinkui allows users to match images of distinct datasets of the same location in the night sky. The goal is to provide intuitive feedback about the quality of the current matching to the user, where a good matching receives a better score than a bad one. 
+As described in section \ref{sect:case-study:intro}, the \mlblinkui allows users to match images of distinct datasets of the same location in the night sky. The goal is to provide intuitive feedback about the quality of the current matching to the user, where a good matching receives a better score than a bad one. \newline
 
-The different steps taken to process a matching can be summarized as follows: computing the region of interest (ROI), smoothing, binarization, object detection, object size normalization, and computing accuracy. These steps in conjunction define the algorithm used to compute the quality of a matching, and it is referred to as the matching algorithm.
+The different steps taken to process a matching can be summarized as follows: computing the region of interest (ROI), smoothing, binarization, object detection, object size normalization, and computing accuracy. These steps in conjunction define the algorithm used to compute the quality of a matching, and it is referred to as the matching algorithm. \newline
 
-Every time the user changes the position of the \panstarrs image, a ``debounced'' function is created. A debounced function allows to wait a specified number of milliseconds before invoking another function. This allows the \mlblinkui to avoid computing the aforementioned algorithm every time the user changes the position of the \panstarrs image, and instead wait until 250 \si{\milli\second} have elapsed -- and no further position or transformation has occurred -- to execute the matching algorithm.
+Every time the user changes the position of the \panstarrs image, a ``debounced'' function is created. A debounced function allows to wait a specified number of milliseconds before invoking another function. This allows the \mlblinkui to avoid computing the aforementioned algorithm every time the user changes the position of the \panstarrs image, and instead wait until 250 \si{\milli\second} have elapsed -- and no further position or transformation has occurred -- to execute the matching algorithm. \newline
 
 In order to better illustrate how the matching algorithm works, the following subsections will use figure \ref{fig:mission-0} as an example. It is worth nothing that while all of these steps are performed when determining the accuracy of a matching, only step \ref{subsubsect:case-study:impl:roi} is actually drawn behind the scenes in the UI. The arrays which represent the rest of these steps are only stored in memory, since there is no need to draw them on the UI. Additionally, except for the accuracy computation, all of these steps are only performed once for the \usno image when it is loaded, since it is static and there is no need to re--compute the same thing again.
 
@@ -47,7 +47,7 @@ The ROI is defined as a square of 200 pixels placed on top of the center of the 
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
         ]{report/images/image-matching/usno-0-blue1-roi.png}
@@ -57,7 +57,7 @@ The ROI is defined as a square of 200 pixels placed on top of the center of the 
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
       ]{report/images/image-matching/panstarr-0-g-roi.png}
@@ -69,7 +69,7 @@ The ROI is defined as a square of 200 pixels placed on top of the center of the 
 \end{figure}
 
 \subsubsection{Smoothing} \label{subsubsect:case-study:impl:smooth}
-Once the ROI has been computed for both images, the pixel value intensities of the RGBA channels of each image in their respective ROI are retrieved. Since the images are in gray--scale format, all RGB pixel value intensities at the same location are equal, which means that the remaining computations can be performed only across a single channel. As a result, only the pixel value intensities of the R channel are smoothed using a mean filter, which facilitates object detection in the upcoming steps.
+Once the ROI has been computed for both images, the pixel value intensities of the RGBA channels of each image in their respective ROI are retrieved. Since the images are in gray--scale format, all RGB pixel value intensities at the same location are equal, which means that the remaining computations can be performed only across a single channel. As a result, only the pixel value intensities of the R channel are smoothed using a mean filter, which facilitates object detection in the upcoming steps. \newline
 
 The mean filter uses a $3 \times 3$ kernel which scans the entire ROI of each image and replaces the center pixel where the kernel is located at with the mean pixel value intensity of the entire ROI of each image. The mean pixel value intensity is also used for out--of--boundary pixels when placing the kernel in the border pixels of the ROI.
 
@@ -81,7 +81,7 @@ The next step is to binarize the smoothed pixel value intensities of each image'
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
         ]{report/images/image-matching/usno-0-blue1-bw.png}
@@ -91,7 +91,7 @@ The next step is to binarize the smoothed pixel value intensities of each image'
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
       ]{report/images/image-matching/panstarr-0-g-bw.png}
@@ -103,9 +103,9 @@ The next step is to binarize the smoothed pixel value intensities of each image'
 \end{figure}
 
 \subsubsection{Object Detection} \label{subsubsect:case-study:impl:objects}
-The binarized ROI are then fed through an object detection algorithm. The object detection algorithm uses connected components to label all pixels connected to an object before proceeding with the next pixel. Since the input image is binarized, any object to be identified must have a pixel value intensity of 255. 
+The binarized ROI are then fed through an object detection algorithm. The object detection algorithm uses connected components to label all pixels connected to an object before proceeding with the next pixel. Since the input image is binarized, any object to be identified must have a pixel value intensity of 255. \newline
 
-The algorithm works by first filtering the entire array of pixels by those which are cataloged as an object. Once these have been found, a kernel of size $3 \times 3$ placed on top of such pixels is used to find its neighbors. The neighbors are then filtered by those that are objects and have not been labeled yet. Following that, each of these neighbors are labeled using the label of that connected component, and kept track of in a queue data structure for follow up labelling. Only once all these neighbors have been labeled (i.e. the queue is empty), the algorithm continues with the next pixel value intensity cataloged as an object.
+The algorithm works by first filtering the entire array of pixels by those which are cataloged as an object. Once these have been found, a kernel of size $3 \times 3$ placed on top of such pixels is used to find its neighbors. The neighbors are then filtered by those that are objects and have not been labeled yet. Following that, each of these neighbors are labeled using the label of that connected component, and kept track of in a queue data structure for follow up labelling. Only once all these neighbors have been labeled (i.e. the queue is empty), the algorithm continues with the next pixel value intensity cataloged as an object. \newline
 
 Figure \ref{fig:mission-0:objects} shows the connected components found by the object detection algorithm in each of the images' ROI.
 
@@ -114,7 +114,7 @@ Figure \ref{fig:mission-0:objects} shows the connected components found by the o
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
         ]{report/images/image-matching/usno-0-blue1-objects.png}
@@ -124,7 +124,7 @@ Figure \ref{fig:mission-0:objects} shows the connected components found by the o
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
       ]{report/images/image-matching/panstarr-0-g-objects.png}
@@ -136,9 +136,9 @@ Figure \ref{fig:mission-0:objects} shows the connected components found by the o
 \end{figure}
 
 \subsubsection{Object Size Normalization} \label{subsubsect:case-study:impl:object-normalization}
-The objects detected within each image's ROI are then normalized by replacing each of them by an equal sized square object. \usno objects are replaced by squares of size $9$, while objects of size $13$ for \panstarrs were found to result in a more intuitive score in the UI. 
+The objects detected within each image's ROI are then normalized by replacing each of them by an equal sized square object. \usno objects are replaced by squares of size $9$, while objects of size $13$ for \panstarrs were found to result in a more intuitive score in the UI.  \newline
 
-The object normalization algorithm takes the labeled objects as in figure \ref{fig:mission-0:objects}, and for each of them, computes its center of mass. The center of mass is calculated for the $x$--axis and $y$--axis in a similar way. The $x$--axis center of mass is computed by adding the row of each pixel defined within an object and dividing the resulting total by the number of pixels the object has. The same procedure is performed for the $y$--axis center of mass, but adding the column of each pixel defined within the object instead. Once the center of mass has been computed in both axis, a squared object of a specified size is placed on top of the object's center of mass. 
+The object normalization algorithm takes the labeled objects as in figure \ref{fig:mission-0:objects}, and for each of them, computes its center of mass. The center of mass is calculated for the $x$--axis and $y$--axis in a similar way. The $x$--axis center of mass is computed by adding the row of each pixel defined within an object and dividing the resulting total by the number of pixels the object has. The same procedure is performed for the $y$--axis center of mass, but adding the column of each pixel defined within the object instead. Once the center of mass has been computed in both axis, a squared object of a specified size is placed on top of the object's center of mass. \newline
 
 Figure \ref{fig:mission-0:equal-sized-objects} shows the resulting square objects after both the \usno and \panstarrs images' ROI objects size have been normalized.
 
@@ -147,7 +147,7 @@ Figure \ref{fig:mission-0:equal-sized-objects} shows the resulting square object
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
         ]{report/images/image-matching/usno-0-blue1-equal-sized-objects.png}
@@ -157,7 +157,7 @@ Figure \ref{fig:mission-0:equal-sized-objects} shows the resulting square object
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[
-            width=0.60\textwidth,
+            width=0.75\textwidth,
             height=\textheight,
             keepaspectratio
       ]{report/images/image-matching/panstarr-0-g-equal-sized-objects.png}

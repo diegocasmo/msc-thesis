@@ -6,7 +6,7 @@ This section describes the overall idea of the case study and how it was used to
 % Introduction to Case Study
 The case study consists of a user interface (UI) that allows users to match two images of the same location in the night sky from distinct datasets, and an Application Programming Interface (API) that processes data created by the UI. Figure \ref{fig:ml-blink-ui-main-screen} shows the UI where users can create a matching of two images.
 
-\begin{figure}[H]
+\begin{figure}
   \centering
   \includegraphics[
         width=\textwidth,
@@ -21,9 +21,9 @@ The case study consists of a user interface (UI) that allows users to match two 
 
 % What is USNO-B1.0?
 % What is Pan-STARRS1?
-The case study was carried out using a subset of the \usno and \panstarrs datasets. \usno is an all-sky catalog composed from multiple sky surveys during the interval from 1949 to 2002 \cite{web:caltech:usno} that indicates positions, proper motions, star/galaxy estimators and other astronomical features for 1,042,618,261 objects derived from 3,643,201,733 distinct observations \cite{web:ap-i:usno}. Pan--STARRS is a system for wide-field astronomical imaging developed and operated by the Institute for Astronomy at the University of Hawaii. \panstarrs is the first part of Pan--STARRS to be completed and is the basis for both Data Releases 1 and 2 (DR1 and DR2). \panstarrs DR1 was released on December 19, 2016 \cite{web:stsci:panstarrs}.
+The case study was carried out using a subset of the \usno and \panstarrs datasets. \usno is an all-sky catalog composed from multiple sky surveys during the interval from 1949 to 2002 \cite{web:caltech:usno} that indicates positions, proper motions, star/galaxy estimators and other astronomical features for 1,042,618,261 objects derived from 3,643,201,733 distinct observations \cite{web:ap-i:usno}. Pan--STARRS is a system for wide-field astronomical imaging developed and operated by the Institute for Astronomy at the University of Hawaii. \panstarrs is the first part of Pan--STARRS to be completed and is the basis for both Data Releases 1 and 2 (DR1 and DR2). \panstarrs DR1 was released on December 19, 2016 \cite{web:stsci:panstarrs}.  \newline
 
-The subset consisted of a total of 1000 unique cases in each dataset, each described across different bands. The \usno subset used a total of five bands (\texttt{blue1}, \texttt{blue2}, \texttt{red1}, \texttt{red2}, and \texttt{ir}), while \panstarrs subset used a total of three bands (\texttt{g}, \texttt{r}, and \texttt{z}). Table \ref{table:case-study:intro:datasets-mapping} shows how each of these bands are related to one another in \usno and \panstarrs respectively. Lastly, the subsets' images were all in gray--scale format for all dataset bands.
+The subset consisted of a total of 1000 unique cases in each dataset, each described across different bands. The \usno subset used a total of five bands (\texttt{blue1}, \texttt{blue2}, \texttt{red1}, \texttt{red2}, and \texttt{ir}), while \panstarrs subset used a total of three bands (\texttt{g}, \texttt{r}, and \texttt{z}). Table \ref{table:case-study:intro:datasets-mapping} shows how each of these bands are related to one another in \usno and \panstarrs respectively. Lastly, the subsets' images were all in gray--scale format for all dataset bands. 
 
 \begin{table}[H]
     \centering
@@ -47,9 +47,9 @@ The subset consisted of a total of 1000 unique cases in each dataset, each descr
 \end{table}
 
 \subsection{Matching Accuracy} \label{subsect:case-study:intro:matching-accuracy}
-The UI uses an accuracy threshold shown to the user in the right side of the screen to determine whether a matching of two images is good or not. If a user is able to achieve an accuracy greater or equal than that of the accuracy threshold, the mission is then considered to be successfully completed and the two images are unlikely to contain an anomaly. If the accuracy achieved by the user is less than that of the accuracy threshold, then the images that represent the mission are considered to be potential anomalies. 
+The UI uses an accuracy threshold shown to the user in the right side of the screen to determine whether a matching of two images is good or not. If a user is able to achieve an accuracy greater or equal than that of the accuracy threshold, the mission is then considered to be successfully completed and the two images are unlikely to contain an anomaly. If the accuracy achieved by the user is less than that of the accuracy threshold, then the images that represent the mission are considered to be potential anomalies.  \newline
 
-The accuracy threshold used to conduct the case study was fixed at $80$\%. To fix it, a few missions from the datasets were randomly selected and manually altered to represent anomalies of interest, such as replacing a bright section of one of the images with its background, while the other image remained unaltered. Figure \ref{fig:fake:mission-13} shows an example of an anomaly that was manually created, where the center object of the image from the \panstarrs dataset has been replaced by its background. When missions like this were presented in the UI, it was found to be difficult, and in some occasions impossible, to get an accuracy greater than $80$\%, and thus why it was selected as the accuracy threshold.
+The accuracy threshold used to conduct the case study was fixed at $80$\%. To fix it, a few missions from the datasets were randomly selected and manually altered to represent anomalies of interest, such as replacing a bright section of one of the images with its background, while the other image remained unaltered. Figure \ref{fig:fake:mission-13} shows an example of an anomaly that was manually created, where the center object of the image from the \panstarrs dataset has been replaced by its background. When missions like this were presented in the UI, it was found to be difficult, and in some occasions impossible, to get an accuracy greater than $80$\%, and thus why it was selected as the accuracy threshold.  \newline
 
 \begin{figure}[H]
     \centering

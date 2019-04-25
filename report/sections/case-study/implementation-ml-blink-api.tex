@@ -24,7 +24,7 @@ The active set is a collection persisted in MongoDB compromised of missions whic
     \label{table:case-study:impl:active-set:schema}
 \end{table}
 
-When a user submits a mission in the \mlblinkui, its data is received by the \mlblinkapi and persisted in the database. Following that, a background task is created to further determine what to do with it. 
+When a user submits a mission in the \mlblinkui, its data is received by the \mlblinkapi and persisted in the database. Following that, a background task is created to further determine what to do with it. \newline
 
 The background task, named \texttt{tprocess\_created\_mission}, is in charge of defining whether a mission's data should be added to the active set or not. A mission is added to the active set if its~\texttt{accuracy} achieved in the \mlblinkui is at least as good as its~\texttt{accuracy\_threshold}. Additionally, the mission's data is analyzed to determine whether the user tried to at least do a matching by verifying whether the two images coordinates overlap (i.e. one image is placed on top of the other). Finally, if a mission's data is successfully inserted in the active set collection, the \texttt{tcrawl\_candidates} task is called to crawl a new candidate mission. 
 
@@ -51,11 +51,11 @@ The schema definition of a potential anomaly is shown in table~\ref{table:case-s
 
 \subsubsection{Crawling Candidates} \label{subsubsect:case-study:impl:crawling-candidates}
 
-The \texttt{tcrawl\_candidates} background task uses the Celery ``chord'' API to crawl for candidates. The Celery chord API allows to execute a task once a group of other parallel tasks have finished.
+The \texttt{tcrawl\_candidates} background task uses the Celery ``chord'' API to crawl for candidates. The Celery chord API allows to execute a task once a group of other parallel tasks have finished. \newline
 
-The \texttt{tcrawl\_candidates} generates a list of image keys to analyze over all five bands defined among the two datasets. This list is refereed to as the potential candidates list, since it contains the candidate that will be selected when the algorithm finishes. Missions which are known to be potential anomalies are filtered out of this list, since these have already been tagged for further analysis.
+The \texttt{tcrawl\_candidates} generates a list of image keys to analyze over all five bands defined among the two datasets. This list is refereed to as the potential candidates list, since it contains the candidate that will be selected when the algorithm finishes. Missions which are known to be potential anomalies are filtered out of this list, since these have already been tagged for further analysis. \newline
 
-Once the potential candidates list has been generated and filtered, it is split into the available number of processes the machine where the \mlblinkapi is running has. Each chunk is then processed in parallel by a different Celery worker. These workers compute the value of \texttt{v} for each potential candidate in its chunk using the implicit definition described in section \ref{sect:meth:implicit}. 
+Once the potential candidates list has been generated and filtered, it is split into the available number of processes the machine where the \mlblinkapi is running has. Each chunk is then processed in parallel by a different Celery worker. These workers compute the value of \texttt{v} for each potential candidate in its chunk using the implicit definition described in section \ref{sect:meth:implicit}. \newline
 
 Finally, once all chunks have been processed, a task is used to ``reduce'' the result, by retrieving the potential candidate that has the lowest \texttt{v} value among all the potential candidates analyzed by the different Celery workers. Since it is the most different to those in the active set (and therefore most likely to contain an anomaly), this candidate is inserted in the candidates collection. Table \ref{table:case-study:impl:candidates:schema} shows the schema definition of a document of the candidates collection.
 
