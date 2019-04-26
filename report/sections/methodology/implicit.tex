@@ -1,2 +1,55 @@
 \section{Implicit Representation} \label{sect:meth:implicit}
-\todo[inline]{TODO: Define implicit representation formula and how it is used}
+
+Since the weight matrix $\vect{D}$ must provide an interface to easily access, update, and save its values, it is therefore desirable to create a data structure that can aid in creating such design. To do so, equation \ref{eq:v-explicit} can be implicitly represented, similarly to how it was done in equation \ref{eq:v-flesh-out:short}, but without assuming the vectors $\vect{x}$ and $\vect{y}$ have the same dimensions. \newline
+
+To start off, let us first re--write the update rule defined in equation $\ref{eq:v-explicit:update}$. By construction, the matrix $\vect{D}$ can also be represented as:
+
+\begin{equation} \label{eq:d-implicit}
+    \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
+\end{equation}
+
+Where $\vect{v}_i$ and $\vect{w}_i$ represent a mission that was learned by the model, and $A$ is the set of all vectors that have been learned by the model, referred to as the active set. Hence, if the algorithm needs to compute the value $v$ of a particular mission consisting of the vectors $\vect{x}$ and $\vect{y}$, equation \ref{eq:v-explicit} can be re--written as:
+
+\begin{equation} \label{eq:v-implicit}
+    \begin{split}
+        v &= \vect{x}^T \vect{D} \vect{y} \\
+        &= \vect{x}^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y} \\
+        &= ( x^T \cdot v_1 )  ( w_1^T \cdot y ) + ( x^T \cdot v_2 ) ( w_2^T  \cdot y ) + \cdots + ( x^T \cdot v_n )  ( w_n^T \cdot y ) \\
+    \end{split}
+\end{equation}
+
+Algorithm \ref{pscode:compute-v:implicit} shows the updated method \texttt{compute\_v\_implicit} used to calculate the value $v$ of a mission.
+
+\vspace{0.4cm}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwProg{FMain}{compute\_v\_implicit}{:}{end}
+        \FMain{$i$, $j$} {
+            Let $i$ be an image key, and $j$ be an image band \\
+            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
+            Retrieve all members of the active set $A$ \\
+            Compute $v = \vect{x}^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}$ \\
+            \Return $v$
+        }
+    \caption{Pseudo--code for computing the value $v$ for a mission setup using the implicit definition of the matrix $\vect{D}$.}
+    \label{pscode:compute-v:implicit}
+\end{algorithm}
+\vspace{0.4cm}
+
+Finally, when using the implicit definition of the weight matrix $\vect{D}$, in order to learn new information, all that is needed is to insert a mission to the active set $A$. Algorithm \ref{pscode:update-d:implicit} shows the updated \texttt{update\_d\_implicit} method used to updated the active set $A$ when new information needs to be learned by the model.
+
+\vspace{0.4cm}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwProg{FMain}{update\_d\_implicit}{:}{end}
+        \FMain{$i$, $j$} {
+            Let $i$ be an image key, and $j$ be an image band \\
+            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
+            $A \gets A + \vect{x}\vect{y}^T$ \\
+        }
+    \caption{Pseudo--code for updating the implicit representation of the matrix $\vect{D}$.}
+    \label{pscode:update-d:implicit}
+\end{algorithm}
+\vspace{0.4cm}
