@@ -1,6 +1,6 @@
 \section{Introduction} \label{sect:meth:intro}
 
-An arrangement of two images from the same location of the night sky from distinct datasets in their corresponding bands is defined as a mission. The goal of the \mlblink algorithm is then to ``crawl'' these missions in order to recommend those that are more likely to contain an anomaly. In order to do so, the \mlblink algorithm will learn what non--anomalies look like, randomly select a set of missions to process, and recommend those that are most different from the non--anomalies it has learned. The recommended mission is referred to as a candidate.  \newline
+An arrangement of two images from the same location of the night sky from distinct datasets in their corresponding bands is defined as a mission. The goal of the \mlblink algorithm is then to ``crawl'' these missions in order to recommend those that are more likely to contain an anomaly. In order to do so, the \mlblink algorithm will learn what non--anomalies look like,  select a set of missions to process, and recommend those that are most different from the non--anomalies it has learned. The recommended mission is referred to as a candidate.  \newline
 
 Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to crawl for a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned. Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
 
@@ -10,7 +10,7 @@ Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what 
     \SetKwProg{FMain}{ml\_blink}{:}{end}
         \FMain{} {
             \For{$t = 0, 1, 2, ...$} {
-                Randomly select a set of missions to crawl \\
+                Select a set of missions to crawl \\
                 For each mission, compute its $v$ value \\
                 Select mission with $\text{min}(v)$ as a candidate \\
             }
@@ -20,4 +20,4 @@ Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what 
 \end{algorithm}
 \vspace{0.4cm}
 
-After a set of missions has been selected, computing their corresponding $v$ value is what will differ depending on how the weights learned by the algorithm are represented.
+After a set of missions has been selected, computing their corresponding $v$ value is what will differ depending on how the weights in the matrix $\vect{D}$ learned by the algorithm are represented. It is also important to note that the very first time the matrix $\vect{D}$ is retrieved, all of its weights are equal to $0$ (i.e. it has not learned anything yet), and therefore any mission given to it will return a $v$ value equal to $0$. If multiple missions are tied for the minimum value $v$, the \mlblink algorithm will randomly select a mission within those in the tie as the candidate.

@@ -2,18 +2,18 @@
 
 The main focus of this thesis is the study, implementation, and analysis of the \mlblink algorithm. The \mlblink algorithm was presented to me by my supervisor Kristiaan Pelckmans, and it was designed to recommend one item over another (i.e. a recommender system). The \mlblink algorithm will determine how to recommend items based on a criteria it will learn using online and semi--supervised active learning techniques.  \newline
 
-Formally, consider a pair of vectors $\vect{x}$ and $\vect{y}$ that represent the same information, but taken from different sources during distinct times. The goal is then to create a scoring function which is able to recommend pair of items that are more likely to contain an anomaly than those that do not. Since each pair of items represents essentially the same information, a pair of items is considered to contain an anomaly when something is present in one, but not in the other. Let the scoring function be defined as in equation \ref{eq:v-explicit}, where $\vect{D}$ is the matrix that contains the weights that need to be learned by the model and it is initially $\vect{D} = 0$.
+Formally, consider a pair of vectors $\vect{x}_i$ and $\vect{y}_j$ that represent the same information, but taken from different sources during distinct times. The goal is then to create a scoring function which is able to recommend pair of items that are more likely to contain an anomaly than those that do not. Since each pair of items represents essentially the same information, a pair of items is considered to contain an anomaly when something is present in one, but not in the other. Let the scoring function be defined as in equation \ref{eq:v-explicit}, where $\vect{D}$ is the matrix that contains the weights that need to be learned by the model and it is initially $\vect{D} = 0$.
 
 \begin{equation} \label{eq:v-explicit}
-  v = \vect{x}^T \vect{D} \vect{y}  
+  v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j  
 \end{equation}
 
-The value $v$ of any pair of items $\vect{x}$ and $\vect{y}$ is then defined as in equation \ref{eq:v-flesh-out}.
+The value $v$ of a pair of items $\vect{x}_i$ and $\vect{y}_j$ is then defined as in equation \ref{eq:v-flesh-out}.
 
 \begin{equation} \label{eq:v-flesh-out}
     v = 
     \begin{bmatrix}
-        x_{1} & x_{2} & \cdots & x_{n_x} \\
+        x_{i,1} & x_{i,2} & \cdots & x_{i,n_x} \\
     \end{bmatrix}
     \begin{bmatrix}
         d_{1,1} & d_{1,2} & \cdots & d_{1,n_y} \\
@@ -22,59 +22,77 @@ The value $v$ of any pair of items $\vect{x}$ and $\vect{y}$ is then defined as 
         d_{n_x,1} & d_{n_x,2} & \cdots & d_{n_x,n_y} \\
     \end{bmatrix}
     \begin{bmatrix}
-        y_{1} \\
-        y_{2} \\
+        y_{j,1} \\
+        y_{j,2} \\
         \vdots  \\
-        y_{n_y} \\
+        y_{j,n_y} \\
     \end{bmatrix}
 \end{equation}
 
 
-For the sake of readability, let us furthermore consider a pair of items $\vect{x}$ and $\vect{y}$ such that $n_x = 2$ and $n_y = 2$. The resulting formula is shown in equation \ref{eq:v-flesh-out:short}.
+For the sake of readability, let us furthermore consider a pair of items $\vect{x}_i$ and $\vect{y}_j$ such that $n_x = 2$ and $n_y = 2$. The resulting formula is shown in equation \ref{eq:v-flesh-out:short}.
 
 \begin{equation} \label{eq:v-flesh-out:short}
     \begin{split} 
         v &= 
             \begin{bmatrix}
-                x_{1} & x_{2} \\
+                x_{i,1} & x_{i,2} \\
             \end{bmatrix}
             \begin{bmatrix}
                 d_{1,1} & d_{1,2} \\
                 d_{2,1} & d_{2,2} \\
             \end{bmatrix}
             \begin{bmatrix}
-                y_{1} \\
-                y_{2} \\
+                y_{j,1} \\
+                y_{j,2} \\
             \end{bmatrix} \\
         &=
             \begin{bmatrix}
-                x_{1}d_{1,1} + x_{2}d_{2,1} & x_{1}d_{1,2} + x_{2}d_{2,2} \\
+                x_{i,1}d_{1,1} + x_{i,2}d_{2,1} & x_{i,1}d_{1,2} + x_{i,2}d_{2,2} \\
             \end{bmatrix}    
             \begin{bmatrix}
-                y_{1} \\
-                y_{2} \\
+                y_{j,1} \\
+                y_{j,2} \\
             \end{bmatrix} \\
         &= 
-            y_{1}x_{1}d_{1,1} + y_{2}x_{1}d_{1,2} + y_{1}x_{2}d_{2,1} + y_{2}x_{2}d_{2,2} \\
+            y_{j,1}x_{i,1}d_{1,1} + y_{j,2}x_{i,1}d_{1,2} + y_{j,1}x_{i,2}d_{2,1} + y_{j,2}x_{i,2}d_{2,2} \\
     \end{split}
 \end{equation}
 
-Intuitively, the relevance of two features, say $y_1$ and $x_1$ is determined by the learned weight $d_{1,1}$. For example, by looking at the term
+Intuitively, the relevance of two features, say $y_{j,1}$ and $x_{i,1}$ is determined by the learned weight $d_{1,1}$. For example, by looking at the term
 
 \begin{equation} \nonumber
     \begin{split}
-        y_{1}x_{1}d_{1,1}
+        y_{j,1}x_{i,1}d_{1,1}
     \end{split}
 \end{equation}
 
-the weight assigned to $d_{1,1}$ will specify how important is the contribution of the $y_1$ and $x_1$ vectors' components according to what the \mlblink algorithm has been taught. A large value of $d_{1,1}$ will therefore assign a high significance to $y_1$ and $x_1$, while a small value of it means $y_1$ and $x_1$ are not highly correlated with the objective value $v$. Finally, a value of $d_{1,1} = 0$ means the $y_1$ and $x_1$ features have no importance in terms of determining $v$.  \newline
+the weight assigned to $d_{1,1}$ will specify how important is the contribution of the $y_{j,1}$ and $x_{i,1}$ vectors' components according to what the \mlblink algorithm has been taught. A large value of $d_{1,1}$ will therefore assign a high significance to $y_{j,1}$ and $x_{i,1}$, while a small value of it means $y_{j,1}$ and $x_{i,1}$ are not highly correlated with the objective value $v$. Finally, a value of $d_{1,1} = 0$ means the $y_{j,1}$ and $x_{i,1}$ features have no importance in terms of determining $v$.  \newline
 
 As mentioned earlier, the matrix $\vect{D}$ will be learned using a combination of online and semi-supervised active learning techniques as defined in sections \ref{sect:theory:online-learning}, \ref{sect:theory:supervised-learning}, and \ref{sect:theory:active-learning} respectively, where expert users will catalog multiple pairs of items to determine whether these contain an anomaly or not. The \mlblink algorithm will use this interaction to learn what non--anomalies look like and encode their features in the matrix $\vect{D}$. As a result, equation \ref{eq:v-explicit} will dictate ``how much'' like a non--anomaly does a pair of items ``look like''. That is, a resulting value of $v$ that is large is unlikely to contain an anomaly, because it means the features of the pair of items at hand is highly correlated with what the \mlblink algorithm has learned is a non--anomaly. In the other hand, a small value of $v$ means that a particular pair of items is quite different from what the \mlblink algorithm has learned, so it follows that the pair of items can possibly contain an anomaly.  \newline
 
-How should the matrix $\vect{D}$ weights be learned? Given an unlabeled pool of observations, it is desirable to construct a query such that the selected pair of items results in the minimum value of $v$ given what the \mlblink algorithm currently knows in \vect{D}. That is, the \mlblink algorithm will send a query to an expert user which contains a pair of items that the weights of the matrix $\vect{D}$ believes to contain an anomaly(s). The user will then determine whether the query contains an anomaly or not, and based on that the \mlblink algorithm will then update the weights of the matrix $\vect{D}$.  \newline
+How should the matrix $\vect{D}$ weights be learned? Given an unlabeled pool of observations, it is desirable to construct a query such that the selected pair of items results in the minimum value of $v$ given what the \mlblink algorithm currently knows in \vect{D}. That is, the \mlblink algorithm will send a query to an expert user which contains a pair of items that the weights of the matrix $\vect{D}$ believes to contain an anomaly(s). The user will then determine whether the query contains an anomaly or not, and based on that the \mlblink algorithm will then update the weights of the matrix $\vect{D}$ if necessary.  \newline
 
 How should the weights of the matrix $\vect{D}$ be updated then? The query sent to the user contained what the \mlblink algorithm believed to be an anomaly. As a result, if the query actually has an anomaly, there is nothing to change, since the matrix $\vect{D}$ weights correctly identified what corresponds to an anomaly(s). On the other hand, if the query contained no anomaly(s), the weights of the matrix $\vect{D}$ must be updated as shown in equation \ref{eq:v-explicit:update}.
 
 \begin{equation} \label{eq:v-explicit:update}
-  \vect{D} \gets \vect{D} + \vect{x} \vect{y}^T  
+  \vect{D} \gets \vect{D} + \vect{x}_i \vect{y}_{j}^{T}  
 \end{equation}
+
+Equations \ref{eq:v-explicit} can also be implicitly represented. To start off, let us first re--write the update rule defined in equation $\ref{eq:v-explicit:update}$. By construction, the matrix $\vect{D}$ can also be represented as
+
+\begin{equation} \label{eq:d-implicit} \nonumber
+    \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
+\end{equation}
+
+where $\vect{v}_i$ and $\vect{w}_i$ represent a pair of items that were learned by the model, and $A$ is the set of all vectors that have been learned by the model, referred to as the active set. Hence, if the algorithm needs to compute the value $v$ of a particular pair of items consisting of the vectors $\vect{x}_i$ and $\vect{y}_j$, equation \ref{eq:v-explicit} can be re--written as:
+
+\begin{equation} \label{eq:v-implicit}
+    \begin{split}
+        v &= \vect{x}_i^T \vect{D} \vect{y}_j \\
+        &= \vect{x}_i^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_j \\
+        &= ( x_i^T \cdot v_1 )  ( w_1^T \cdot y_j ) + ( x_i^T \cdot v_2 ) ( w_2^T  \cdot y_j ) + \cdots + ( x_i^T \cdot v_n )  ( w_n^T \cdot y_j ) \\
+    \end{split}
+\end{equation}
+
+The advantages of using an implicit representation to describe what the \mlblink algorithm has learned in the matrix $\vect{D}$ (or the active set) and compute the objective value of a pair of items $\vect{x}_i$ and $\vect{y}_j$ will be further explained in sections \ref{sect:meth:explicit} and \ref{sect:meth:implicit}.

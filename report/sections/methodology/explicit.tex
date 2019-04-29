@@ -1,8 +1,8 @@
 \section{Explicit Representation} \label{sect:meth:explicit}
 
-The explicit representation of the learned weights simply stores these weights in a matrix $\vect{D}$ as shown in equation \ref{eq:v-explicit}. The matrix $\vect{D}$ is then used to compute the value $v$ of a mission, as well as updating it to learn new information.
+The explicit representation of the learned weights simply stores these weights in a matrix $\vect{D}$ as shown in equation \ref{eq:v-explicit}. The matrix $\vect{D}$ is then used to compute the value $v$ of a mission, as well as updating it to learn new information. \newline
 
-Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a mission setup will return the $v$ value of such mission. It is important to note that the very first time the matrix $\vect{D}$ is retrieved, all of its weights are equal to $0$ (i.e. it has not learned anything yet), and therefore any mission given to it will return a $v$ value equal to $0$.
+Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a mission setup will return the $v$ value of such mission.
 
 \vspace{0.4cm}
 \begin{algorithm}[H]
@@ -10,10 +10,10 @@ Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a missi
     \SetKwProg{FMain}{compute\_v\_explicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
-            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
             Retrieve weights matrix $\vect{D}$ \\
-            Compute $v = \vect{x}^T \vect{D} \vect{y}$ \\
+            Compute $v = \vect{x}_{i,j}^T \vect{D} \vect{y}_{i,j}$ \\
             \Return $v$
         }
     \caption{Pseudo--code for computing the value $v$ for a mission setup using the explicit definition of the matrix $\vect{D}$.}
@@ -29,13 +29,13 @@ Algorithm \ref{pscode:update-d:explicit} shows how the weights of the matrix $\v
     \SetKwProg{FMain}{update\_d\_explicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}$ according to $i$, $j$ from \usno \\
-            Retrieve image $\vect{y}$ according to $i$, $j$ from \panstarrs \\
-            $\vect{D} \gets \vect{D} + \vect{x}\vect{y}^T$ \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
+            $\vect{D} \gets \vect{D} + \vect{x}_{i,j}\vect{y}_{i,j}^T$ \\
         }
     \caption{Pseudo--code for updating the explicit representation of the matrix $\vect{D}$.}
     \label{pscode:update-d:explicit}
 \end{algorithm}
 \vspace{0.4cm}
 
-The weights learned by the \mlblink algorithm must be persisted in order for multiple crawlers to be able to read and write from the matrix $\vect{D}$ at different time steps. Even though the explicit representation using the matrix $\vect{D}$ provides a simple way to describe what the algorithm has learned and how it can be used to learn new information, storing, retrieving, and updating such weights might represent a performance issue depending on the size of the vectors $\vect{x}$ and $\vect{y}$.
+The weights learned by the \mlblink algorithm must be persisted in order for multiple crawlers to be able to read and write from the matrix $\vect{D}$ at different time steps. Even though the explicit representation using the matrix $\vect{D}$ provides a simple way to describe what the algorithm has learned and how it can be used to learn new information, storing, retrieving, and updating such weights might represent a performance issue depending on the size of the vectors in $\vect{x}$ and $\vect{y}$.
