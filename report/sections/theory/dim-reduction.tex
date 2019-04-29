@@ -1,0 +1,31 @@
+\section{Dimensionality Reduction} \label{sect:theory:dim-reduction}
+% What is dimensionality?
+% What is the curse of dimensionality?
+In machine learning and statistics, it is common to refer to the number of features that make up an observation as its dimensionality. As the number of features that describe such observation increases, it is likely that one will encounter the so called ``curse of dimensionality''. The curse of dimensionality is associated with the fact that as the dimensionality of data increases, the more it becomes sparse in the space that it is represented. As a result, the definitions of properties such as the distance between distinct observations or density become less significant. \newline
+
+% What is dimensionality reduction?
+Dimensionality reduction refers to the process of reducing the number of features that describe an observation. Dimensionality reduction can be performed by either using feature selection (selecting a subset of the original features) or feature extraction (deriving new features from the original features). Dimensionality reduction can help avoid the curse of dimensionality, eliminate unsuitable features, reduce noise, and reduce the amount of time and memory required by machine learning or statistical algorithms to execute. \newline
+
+% How does ML-Blink do dimensionality reduction?
+In order to perform dimensionality reduction, the \mlblink algorithm uses a linear inner product to project a particular pair of items $\vect{x}_i$ and $\vect{y}_j$ to a lower dimension. To better illustrate this method, consider a vector $\vect{x}_i$ where $n_x=3$ and a matrix $\vect{P}$ of size $3 \times 9$ as in equation \ref{eq:proj}.
+
+\begin{equation} \label{eq:proj}
+    \begin{split}
+        \vect{p} 
+        &= 
+            \vect{x}_{i} \cdot \vect{P} \\
+        &=
+            \vect{x}_{i} \cdot
+            \begin{bmatrix}
+                1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\
+                0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+            \end{bmatrix} \\  
+        &=
+            \begin{bmatrix}
+                x_{i,1} + x_{i,2} + x_{i,3} & x_{i,4} + x_{i,5} + x_{i,6} & x_{i,7} + x_{i,8} + x_{i,9}
+            \end{bmatrix} \\
+    \end{split}
+\end{equation}
+
+As shown in equation \ref{eq:proj}, the resulting vector $\vect{p}$ has only 3 dimensions. Each of these dimensions was created by adding a vector component and the next two consecutive components next to it until all elements in the initial vector $\vect{x}_i$ were processed. The linear inner product dimensionality reduction technique is essentially a form of feature extraction, as new features of the vector $\vect{x}_i$ were derived from its original components.
