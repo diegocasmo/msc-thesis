@@ -1,3 +1,21 @@
 \section{Parallelism} \label{sect:meth:parallelism}
 
-\todo[inline]{TODO: Describe in pseudo--code how the \mlblink algorithm will use parallelism to speed up things}
+The \mlblink algorithm also takes advantages of parallel computing in order to allow for faster processing of potential candidates. Algorithm \ref{pscode:ml-blink} is slightly modified to simply split up the potential candidates processing among the available number of processors. Each available processor computes the $v$ value for each potential candidate it was assigned to using the implicit definition from section \ref{sect:meth:implicit}. The result of each process is then ``reduced'' to correctly select the next candidate with $\text{min}(v)$. Algorithm \ref{pscode:ml-blink:parallel} shows the update pseudo--code to crawl for candidates using parallel processing.
+
+\vspace{0.4cm}
+\begin{algorithm}[H]
+    \SetAlgoLined
+    \SetKwProg{FMain}{ml\_blink\_parallel}{:}{end}
+        \FMain{} {
+            \For{$t = 0, 1, 2, ...$} {
+                Select a set of missions to crawl \\
+                Split missions among the number of available processors \\
+                Process each missions' ``chunk'' independently \\
+                Reduce each parallel job results \\
+                Select mission with $\text{min}(v)$ as a candidate \\
+            }
+        }
+    \caption{Slightly modified pseudo--code of the basic building block of the \mlblink algorithm to allow for parallel processing.}
+    \label{pscode:ml-blink:parallel}
+\end{algorithm}
+\vspace{0.4cm}

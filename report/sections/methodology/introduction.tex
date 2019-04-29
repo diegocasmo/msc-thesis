@@ -2,7 +2,7 @@
 
 An arrangement of two images from the same location of the night sky from distinct datasets in their corresponding bands is defined as a mission. The goal of the \mlblink algorithm is then to ``crawl'' these missions in order to recommend those that are more likely to contain an anomaly. In order to do so, the \mlblink algorithm will learn what non--anomalies look like,  select a set of missions to process, and recommend those that are most different from the non--anomalies it has learned. The recommended mission is referred to as a candidate.  \newline
 
-Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to crawl for a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned. Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
+Algorithm \ref{pscode:ml-blink} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to crawl for a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned. Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
 
 \vspace{0.4cm}
 \begin{algorithm}[H]
@@ -16,7 +16,7 @@ Algorithm \ref{pscode:ml-blink:explicit} shows the basic building block of what 
             }
         }
     \caption{Pseudo--code for the basic building block of the \mlblink algorithm.}
-    \label{pscode:ml-blink:explicit}
+    \label{pscode:ml-blink}
 \end{algorithm}
 \vspace{0.4cm}
 
