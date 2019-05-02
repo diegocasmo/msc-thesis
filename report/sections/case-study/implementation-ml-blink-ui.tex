@@ -69,7 +69,7 @@ The ROI is defined as a square of 200 pixels placed on top of the center of the 
 \end{figure}
 
 \subsubsection{Smoothing} \label{subsubsect:case-study:impl:smooth}
-Once the ROI has been computed for both images, the pixel value intensities of the RGBA channels of each image in their respective ROI are retrieved. Since the images are in gray--scale format, all RGB pixel value intensities at the same location are equal, which means that the remaining computations can be performed only across a single channel. As a result, only the pixel value intensities of the R channel are smoothed using a mean filter, which facilitates object detection in the upcoming steps. \newline
+Once the ROI has been computed for both images, the pixel value intensities of the RGBA channels of each image in their respective ROI are retrieved. Since the images are in gray--scale format, all RGB pixel value intensities at the same location are equal, which means that the remaining computations can be performed using a single channel. As a result, only the pixel value intensities of the R channel are smoothed using a mean filter, which facilitates object detection in the upcoming steps. \newline
 
 The mean filter uses a $3 \times 3$ kernel which scans the entire ROI of each image and replaces the center pixel where the kernel is located at with the mean pixel value intensity of the entire ROI of each image. The mean pixel value intensity is also used for out--of--boundary pixels when placing the kernel in the border pixels of the ROI.
 

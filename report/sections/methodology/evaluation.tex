@@ -20,14 +20,16 @@ Before diving into the ROC curve, let us first define a confusion matrix in term
     \label{table:confusion-matrix}
 \end{table}
 
-The ROC curve is defined as the a plot of the true positive rate (TPR) against the false positive rate (FPR). The TPR is defined as in equation \ref{eq:tpr}, where $TP$ corresponds to the true positives (top--left quadrant of the confusion matrix in table \ref{table:confusion-matrix}), and $P$ (positives) is the total number of real anomalies in the dataset. The FPR formula is shown in equation \ref{eq:fpr}, where $FP$ represents the false positive (top--right quadrant in table \ref{table:confusion-matrix}), and $N$ (negatives) is the real number of non--anomalies in the dataset.
+The ROC curve is defined as the a plot of the true positive rate (TPR) against the false positive rate (FPR). The TPR is defined as in equation \ref{eq:tpr}, where TP corresponds to the true positives (top--left quadrant of the confusion matrix in table \ref{table:confusion-matrix}), and P (positives) is the total number of real anomalies in the dataset. The FPR formula is shown in equation \ref{eq:fpr}, where FP represents the false positive (top--right quadrant in table \ref{table:confusion-matrix}), and N (negatives) is the real number of non--anomalies in the dataset.
 
 \begin{equation} \label{eq:tpr}
-    TPR = \dfrac{TP}{P}
+    \text{TPR} = \dfrac{\text{TP}}{\text{P}}
 \end{equation}
 
 \begin{equation} \label{eq:fpr}
-    FPR = \dfrac{FP}{N}
+    \text{FPR} = \dfrac{\text{FP}}{\text{N}}
 \end{equation}
 
 Finally, the ROC curve plot requires a model discrimination threshold to be changed, in the \mlblink algorithm the threshold is going to be the range of $v$ values computed for the missions that were selected to be crawled. The ROC curve will plot the TPR against the FPR ``sweeping'' the entire range of $v$ values in the selected missions from $\text{min}(v)$ up to $\text{max}(v)$, and for each $v$ value computing the TPR and FPR.
+
+\todo[inline]{TODO: What is the AUC and how to interpret it?}
