@@ -1,4 +1,4 @@
-\section{Introduction} \label{sect:meth:intro}
+\section{Crawling Candidates} \label{sect:meth:intro}
 
 An arrangement of two images from the same location of the night sky from distinct datasets in their corresponding bands is defined as a mission. The goal of the \mlblink algorithm is then to ``crawl'' these missions in order to recommend those that are more likely to contain an anomaly. In order to do so, the \mlblink algorithm will learn what non--anomalies look like,  select a set of missions to process, and recommend those that are most different from the non--anomalies it has learned. The recommended mission is referred to as a candidate.  \newline
 
@@ -7,7 +7,7 @@ Algorithm \ref{pscode:ml-blink} shows the basic building block of what the \mlbl
 \vspace{0.4cm}
 \begin{algorithm}[H]
     \SetAlgoLined
-    \SetKwProg{FMain}{ml\_blink}{:}{end}
+    \SetKwProg{FMain}{crawl\_candidates}{:}{end}
         \FMain{} {
             \For{$t = 0, 1, 2, ...$} {
                 Select a set of missions to crawl \\

@@ -10,8 +10,8 @@ Algorithm \ref{pscode:compute-v:explicit} shows pseudo--code which given a missi
     \SetKwProg{FMain}{compute\_v\_explicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
-            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
             Retrieve weights matrix $\vect{D}$ \\
             Compute $v = \vect{x}_{i,j}^T \vect{D} \vect{y}_{i,j}$ \\
             \Return $v$
@@ -29,8 +29,8 @@ Algorithm \ref{pscode:update-d:explicit} shows how the weights of the matrix $\v
     \SetKwProg{FMain}{update\_d\_explicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
-            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
             $\vect{D} \gets \vect{D} + \vect{x}_{i,j}\vect{y}_{i,j}^T$ \\
         }
     \caption{Pseudo--code for updating the explicit representation of the matrix $\vect{D}$.}

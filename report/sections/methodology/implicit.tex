@@ -10,8 +10,8 @@ Algorithm \ref{pscode:compute-v:implicit} shows the updated pseudo--code of the 
     \SetKwProg{FMain}{compute\_v\_implicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
-            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
             Retrieve all members of the active set $A$ \\
             Compute $v = \vect{x}_{i,j}^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_{i,j}$ \\
             \Return $v$
@@ -29,8 +29,8 @@ Finally, when using the implicit definition of the weight matrix $\vect{D}$, in 
     \SetKwProg{FMain}{update\_d\_implicit}{:}{end}
         \FMain{$i$, $j$} {
             Let $i$ be an image key, and $j$ be an image band \\
-            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from $\vect{x}$ source \\
-            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from $\vect{y}$ source \\
+            Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+            Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
             $A \gets A + \vect{x}_{i,j}\vect{y}_{i,j}^T$ \\
         }
     \caption{Pseudo--code for updating the implicit representation of the matrix $\vect{D}$.}

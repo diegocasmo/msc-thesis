@@ -17,35 +17,6 @@ The case study consists of a user interface (UI) that allows users to match two 
   \label{fig:ml-blink-ui-main-screen}
 \end{figure}
 
-\subsection{Datasets} \label{subsect:case-study:intro:datasets}
-
-% What is USNO-B1.0?
-% What is Pan-STARRS1?
-The case study was carried out using a subset of the \usno and \panstarrs datasets. \usno is an all-sky catalog composed from multiple sky surveys during the interval from 1949 to 2002 \cite{web:caltech:usno} that indicates positions, proper motions, star/galaxy estimators and other astronomical features for 1,042,618,261 objects derived from 3,643,201,733 distinct observations \cite{web:ap-i:usno}. Pan--STARRS is a system for wide-field astronomical imaging developed and operated by the Institute for Astronomy at the University of Hawaii. \panstarrs is the first part of Pan--STARRS to be completed and is the basis for both Data Releases 1 and 2 (DR1 and DR2). \panstarrs DR1 was released on December 19, 2016 \cite{web:stsci:panstarrs}.  \newline
-
-The subset consisted of a total of 1000 unique cases in each dataset, each described across different bands. The \usno subset used a total of five bands (\texttt{blue1}, \texttt{blue2}, \texttt{red1}, \texttt{red2}, and \texttt{ir}), while \panstarrs subset used a total of three bands (\texttt{g}, \texttt{r}, and \texttt{z}). Table \ref{table:case-study:intro:datasets-mapping} shows how each of these bands are related to one another in \usno and \panstarrs respectively. Lastly, the subsets' images were all in gray--scale format for all dataset bands. 
-
-\begin{table}[H]
-    \centering
-        \begin{tabular}{| c | c |} 
-            \hline
-                \usno Band & \panstarrs Band \\
-            \hline
-                \texttt{blue1} & \texttt{g} \\
-            \hline
-                \texttt{blue2} & \texttt{g} \\
-            \hline
-                \texttt{red1} & \texttt{r} \\
-            \hline
-                \texttt{red2} & \texttt{r} \\
-            \hline
-                \texttt{ir} & \texttt{z} \\
-            \hline
-        \end{tabular}
-    \caption{Mappings which specify how each band in \usno is related to a band in \panstarrs or vice--versa.}
-    \label{table:case-study:intro:datasets-mapping}
-\end{table}
-
 \subsection{Matching Accuracy} \label{subsect:case-study:intro:matching-accuracy}
 The UI uses an accuracy threshold shown to the user in the right side of the screen to determine whether a matching of two images is good or not. If a user is able to achieve an accuracy greater or equal than that of the accuracy threshold, the mission is then considered to be successfully completed and the two images are unlikely to contain an anomaly. If the accuracy achieved by the user is less than that of the accuracy threshold, then the images that represent the mission are considered to be potential anomalies.  \newline
 
