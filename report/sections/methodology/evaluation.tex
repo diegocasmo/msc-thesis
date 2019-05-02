@@ -1,3 +1,33 @@
 \section{Evaluation} \label{sect:meth:evaluation}
 
-\todo[inline]{TODO: Describe how the \mlblink algorithm will be evaluated}
+As mentioned earlier, the \mlblink algorithm is a recommender system. That being said, it can also be described as a binary classifier, since for any observation it attempts to ``assign'' a label to it as either an anomaly or a non--anomaly. As a result, the receiver operating characteristic (ROC) curve is a suitable technique to study and understand the capability of a model as its discrimination threshold is changed. \newline
+
+Before diving into the ROC curve, let us first define a confusion matrix in terms of the \mlblink algorithm. A confusion matrix is simply a table which allows to visualize the performance of a model by showing what label the model assigns to the observations in comparison to the real labels of these observations. A confusion matrix for the \mlblink algorithm is shown in table \ref{table:confusion-matrix}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cc|cc}
+        \multicolumn{2}{c}{}
+        & \multicolumn{2}{c}{Actual} \\
+        &       &   Anomaly &   Non--anomaly \\ 
+        \cline{2-4}
+        \multirow{2}{*}{Predicted}
+            & Anomaly         & TP   & FP  \\
+            & Non--anomaly    & FN   & TN  \\ 
+            \cline{2-4}
+    \end{tabular}
+    \caption{A confusion matrix table for the \mlblink algorithm. The model predictions are categorized as true positive (TP), false positive (FP), false negative (FP), and true negative (TN).}
+    \label{table:confusion-matrix}
+\end{table}
+
+The ROC curve is defined as the a plot of the true positive rate (TPR) against the false positive rate (FPR). The TPR is defined as in equation \ref{eq:tpr}, where $TP$ corresponds to the true positives (top--left quadrant of the confusion matrix in table \ref{table:confusion-matrix}), and $P$ (positives) is the total number of real anomalies in the dataset. The FPR formula is shown in equation \ref{eq:fpr}, where $FP$ represents the false positive (top--right quadrant in table \ref{table:confusion-matrix}), and $N$ (negatives) is the real number of non--anomalies in the dataset.
+
+\begin{equation} \label{eq:tpr}
+    TPR = \dfrac{TP}{P}
+\end{equation}
+
+\begin{equation} \label{eq:fpr}
+    FPR = \dfrac{FP}{N}
+\end{equation}
+
+Finally, the ROC curve plot requires a model discrimination threshold to be changed, in the \mlblink algorithm the threshold is going to be the range of $v$ values computed for the missions that were selected to be crawled. The ROC curve will plot the TPR against the FPR ``sweeping'' the entire range of $v$ values in the selected missions from $\text{min}(v)$ up to $\text{max}(v)$, and for each $v$ value computing the TPR and FPR.
