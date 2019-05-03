@@ -1,16 +1,19 @@
 \section{Crawling Candidates} \label{sect:meth:intro}
 
-Algorithm \ref{pscode:ml-blink} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to crawl for a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned. Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
+Algorithm \ref{pscode:ml-blink} shows the basic building block of what the \mlblink algorithm does, where the time steps represent when the algorithm is called to generate a new candidate. The value $v$ of a mission defines how similar it is to what the \mlblink algorithm has learned in the matrix $\vect{D}$ (or active set). Since the \mlblink algorithm is designed to learn what non--anomalies are, retrieving the mission with the minimum value $v$ of all that were crawled represents the one that is most dissimilar to what the \mlblink algorithm knows at that particular time step.
 
 \vspace{0.4cm}
 \begin{algorithm}[H]
     \SetAlgoLined
-    \SetKwProg{FMain}{crawl\_candidates}{:}{end}
+    \SetKwProg{FMain}{generate\_candidate}{:}{end}
         \FMain{} {
             \For{$t = 0, 1, 2, ...$} {
-                Select a set of missions to crawl \\
-                For each mission, compute its $v$ value \\
-                Select mission with $\text{min}(v)$ as a candidate \\
+                Select a set of \texttt{missions} to crawl \\
+                \For{\textup{\texttt{mission}} \textup{in} \textup{\texttt{missions}}} {
+                    Compute \texttt{mission}'s $v$ value \\
+                }
+                Select \texttt{mission} with $\text{min}(v)$ as \texttt{candidate} \\
+                \Return \texttt{candidate}
             }
         }
     \caption{Pseudo--code for the basic building block of the \mlblink algorithm.}
