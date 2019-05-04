@@ -104,7 +104,7 @@ The next step is to binarize the smoothed pixel value intensities of each image'
     \label{fig:mission-0:bw}
 \end{figure}
 
-While a binarization technique that automatically finds what threshold to use could have been implemented, a fixed threshold is computationally faster and simpler. However, due to the threshold value not being optimal for all observations, it is also possible that a fixed threshold might mistakenly label a dark section as background, even if it is an object.
+While a binarization technique that automatically finds what threshold to use could have been implemented, a fixed threshold is computationally faster and simpler. However, due to the threshold value not being optimal for all observations, it is also possible that a fixed threshold might mistakenly label a dark section as background, even if it is a ``not so bright'' object.
 
 \subsubsection{Object Detection} \label{subsubsect:case-study:impl:objects}
 The binarized ROI are then fed through an object detection algorithm. The object detection algorithm uses connected components to label all pixels connected to an object before proceeding with the next pixel. Since the input image is binarized, any object to be identified must have a pixel value intensity of 255. \newline
