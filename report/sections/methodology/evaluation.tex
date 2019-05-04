@@ -30,7 +30,6 @@ The ROC curve is defined as the a plot of the true positive rate (TPR) against t
     \text{FPR} = \dfrac{\text{FP}}{\text{N}}
 \end{equation}
 
-Finally, the ROC curve plot requires a model discrimination threshold to be changed, in the \mlblink algorithm the threshold is going to be the range of $v$ values computed for the missions that were selected to be crawled. The ROC curve will plot the TPR against the FPR ``sweeping'' the entire range of $v$ values in the selected missions from $\text{min}(v)$ up to $\text{max}(v)$, and for each $v$ value computing the TPR and FPR.
+The ROC curve plot requires a model discrimination threshold to be changed, in the \mlblink algorithm the threshold is going to be the range of $v$ values computed for the missions that were selected to be crawled. The ROC curve will plot the TPR against the FPR ``sweeping'' the entire range of $v$ values in the selected missions from $\text{min}(v)$ up to $\text{max}(v)$, and for each $v$ value computing the TPR and FPR. \newline
 
-\todo[inline]{TODO: How to interpret the ROC curve?}
-\todo[inline]{TODO: What is the AUC and how to interpret it?}
+The ROC curve is a useful evaluation technique as it allows to easily visualize the trade-off between sensitivity (TPR) and specificity (FPR). The closer the curve being plotted is to the 45--degree diagonal, the less accurate the test is. It is also common to show the Area Under Curve (AUC) when plotting the ROC curve. The AUC of a classifier is equivalent to the probability that the classifier will rank a randomly chosen positive observation higher than a randomly chosen negative observation \cite{article:roc-analysis} (assuming normalize units are being used). For instance, the 45--degree diagonal in the ROC space previously mentioned, has an AUC of $0.5$, equivalent to a random predictor for a binary classification problem.
