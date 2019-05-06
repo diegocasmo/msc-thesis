@@ -73,11 +73,25 @@ As mentioned earlier, the matrix $\vect{D}$ will be learned using a combination 
 
 How should the matrix $\vect{D}$ weights be learned? Given an unlabeled pool of observations, it is desirable to construct a query such that a pair of items with the minimum value of $v$ is selected given what the \mlblink algorithm currently knows in \vect{D}. That is, the \mlblink algorithm will send a query to a user which contains a pair of items that the weights of the matrix $\vect{D}$ evaluates to contain an anomaly(s). The user will then determine whether the query contains an anomaly or not, and based on that the \mlblink algorithm will then update the weights of the matrix $\vect{D}$ if necessary.  \newline
 
-How should the weights of the matrix $\vect{D}$ be updated then? The query sent to the user contained what the \mlblink algorithm evaluated to be an anomaly. As a result, if the query actually has an anomaly, there is nothing to change, since the matrix $\vect{D}$ weights correctly identified what corresponds to an anomaly(s). On the other hand, if the query contained no anomaly(s), the weights of the matrix $\vect{D}$ must be updated as shown in equation \ref{eq:v-explicit:update}.
+How should the weights of the matrix $\vect{D}$ be updated then? The query sent to the user contained what the \mlblink algorithm evaluated to be an anomaly. As a result, if the query actually has an anomaly, there is nothing to change, since the matrix $\vect{D}$ weights correctly identified what corresponds to an anomaly(s). On the other hand, each time a certain pair $\left( \vect{x}_i, \vect{y}_j \right)$ was falsely recommended at iteration $t$ because it led to a minimal value of $v_{t \left(i, j \right)} = \vect{x}_i^T\vect{D}_{t-1} \vect{y}_j$, $\vect{D}_{t-1}$ needs to be updated so that $(\vect{x}_i, \vect{y}_j)$ is not to be recommended in the near future. In other words, $\vect{D}_{t-1}$ needs to ``learn''  $\left( \vect{x}_i, \vect{y}_j \right)$ as normal. We do this by implementing one gradient step:
 
 \begin{equation} \label{eq:v-explicit:update}
-  \vect{D} \gets \vect{D} + \vect{x}_i \vect{y}_{j}^{T}  
+    \vect{D}_t = \vect{D}_{t-1} + \vect{x}_{i} \vect{y}_{j}^T
 \end{equation}
+
+with $\vect{x}_{i} \vect{y}_{j}^T$ the gradient of the evaluation $\vect{x}_i^T\vect{D}_{t-1} \vect{y}_j$ as 
+
+\begin{equation} \nonumber
+    \nabla (\vect{x}_{i}^T\vect{D}_{t-1} \vect{y}_j) = \nabla (\text{trace}(\vect{D}_{t-1} \vect{y}_j \vect{x}_i^T)) = \vect{y}_j \vect{x}_i^T
+\end{equation}
+
+where $\nabla(.)$ denotes the gradient with respect to $\vect{D}_{t-1}$. In this way, the next iteration will score the case $\left( \vect{x}_i, \vect{y}_j \right)$ higher. That is
+
+\begin{equation} \nonumber
+    \vect{x}_i^T \vect{D}_t \vect{y}_j = \vect{x}_i^T(\vect{D}_{t-1} + \vect{x}_i \vect{y}_j^T) \vect{y}_j = \vect{x}_i^T \vect{D}_{t-1} \vect{y}_j + 1
+\end{equation}
+
+assuming that $||\vect{x}_i ||=||\vect{y}_j ||=1$. Hence, the case $\left( \vect{x}_i, \vect{y}_j \right)$ will not be low (and thus being recommended) in the next iteration. In other words, the algorithm has ``learned'' case $\left( \vect{x}_i, \vect{y}_j \right)$ as desired. \newline
 
 Equations \ref{eq:v-explicit} can also be implicitly represented. To start off, let us first re--write the update rule defined in equation $\ref{eq:v-explicit:update}$. By construction, the matrix $\vect{D}$ can also be represented as
 
