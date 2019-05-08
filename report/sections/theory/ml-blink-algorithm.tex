@@ -81,7 +81,7 @@ How should the weights of the matrix $\vect{D}$ be updated then? The query sent 
 
 with $\vect{x}_{i} \vect{y}_{j}^T$ the gradient of the evaluation $\vect{x}_i^T\vect{D}_{t-1} \vect{y}_j$ as 
 
-\begin{equation} \nonumber
+\begin{equation} \nonumber \footnote{The full proof of the \mlblink algorithm and its mathematical properties will be addressed in a subsequent paper. This report focuses in the implementation and evaluation of the algorithm only.}
     \nabla (\vect{x}_{i}^T\vect{D}_{t-1} \vect{y}_j) = \nabla (\text{trace}(\vect{D}_{t-1} \vect{y}_j \vect{x}_i^T)) = \vect{y}_j \vect{x}_i^T
 \end{equation}
 
