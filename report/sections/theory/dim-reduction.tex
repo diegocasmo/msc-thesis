@@ -1,13 +1,15 @@
 \section{Dimensionality Reduction} \label{sect:theory:dim-reduction}
 % What is dimensionality?
 % What is the curse of dimensionality?
-In machine learning and statistics, it is common to refer to the number of features that make up an observation as its dimensionality. As the number of features that describe such observation increases, it is likely that one will encounter the so called ``curse of dimensionality''. The curse of dimensionality is associated with the fact that as the dimensionality of data increases, the more it becomes sparse in the space that it is represented. As a result, the definitions of properties such as the distance between distinct observations or density become less significant. \newline
+In machine learning and statistics, it is common to refer to the number of features that make up an observation as its dimensionality. As the number of features that describe such observation increases, it is likely that one will encounter the so called ``curse of dimensionality''. The curse of dimensionality is the manifestation of all phenomena that occurs when dealing with high--dimensional data, and that have most often unfortunate consequences on the behavior and performances of learning algorithms \cite{article:curse-of-dim}. \newline
 
 % What is dimensionality reduction?
 Dimensionality reduction refers to the process of reducing the number of features that describe an observation. Dimensionality reduction can be performed by either using feature selection (selecting a subset of the original features) or feature extraction (deriving new features from the original features). Dimensionality reduction can help avoid the curse of dimensionality, eliminate unsuitable features, reduce noise, and reduce the amount of time and memory required by machine learning or statistical algorithms to execute. \newline
 
-% How does ML-Blink do dimensionality reduction?
-In order to perform dimensionality reduction, the \mlblink algorithm uses a linear inner product to project a particular pair of items $\vect{x}_i$ and $\vect{y}_j$ to a lower dimension. To better illustrate this method, consider a vector $\vect{x}_i$ where $n_x=3$ and a matrix $\vect{P}$ of size $3 \times 9$ as in equation \ref{eq:proj}.
+% How does this implementation of the ML-Blink algorithm do dimensionality reduction?
+The implementation of the \mlblink algorithm in this report uses a linear inner product to project a pair of items $(\vect{x}_i, \vect{y}_j)$ to a lower dimension. The choice to use an inner product as a dimensionality reduction technique was made due to its simplicity and the results it was able to achieve. \newline
+
+To better illustrate this method, consider a vector $\vect{x}_i$ where $n_x=3$ and a matrix $\vect{P}$ of size $3 \times 9$ as in equation \ref{eq:proj}.
 
 \begin{equation} \label{eq:proj}
     \begin{split}
