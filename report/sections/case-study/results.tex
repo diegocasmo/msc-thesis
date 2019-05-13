@@ -31,57 +31,57 @@ As seen in table \ref{table:case-study:intro:datasets-mapping}, some \panstarrs 
 
 A naive solution for the requirements of the \vasco project would simply randomly attempt to find the anomalies in the $\beta$--pack. Since there are a total of $5005$ observations in the $\beta$--pack, a random recommender system would recommend an item with probability of $1/5005 = 0.0002$. Furthermore, the \mlblink algorithm will be tested by executing it for $200$ time steps. A random recommender system that is ran $200$ times, with the goal of finding $7$ anomalies in a dataset of $5005$ observations would be expected to find $7 \times 1/5005 \times 200 = 0.27$ anomalies. \newline
 
-Figure \ref{fig:evaluation:roc-curve} shows the ROC curve created by running the \mlblink algorithm for 200 time steps. The image vectors were reduced to 250 projections, and the binarization settings for \usno and \panstarrs were 60 and 220 respectively. These parameters were adjusted using trial and error by analyzing the results of the ROC curve, AUC, and the number of anomalies found during the experiments. While there is some randomization involved in the algorithm, with the parameters previously specified the results are easily reproducible: the \mlblink algorithm consistently achieves an AUC around $0.70$, and finds 3 or 4 anomalies out of 7. In the experiment shown in figure \ref{fig:evaluation:roc-curve}, the \mlblink algorithm found 3/7 anomalies, and achieved the best $\text{AUC} = 0.79$ at $t = 100$. \newline
+Figure \ref{fig:evaluation:roc-curve} shows the ROC curve created by running the \mlblink algorithm for 200 time steps. The image vectors were reduced to 250 projections, and the binarization settings for \usno and \panstarrs were 60 and 220 respectively. These parameters were adjusted using trial and error by analyzing the results of the ROC curve, AUC, and the number of anomalies found during the experiments. While there is some randomization involved in the algorithm, with the parameters previously specified the results are easily reproducible: the \mlblink algorithm consistently achieves an AUC around $0.70$, and finds 3 or 4 anomalies out of 7. In the experiment shown in figure \ref{fig:evaluation:roc-curve}, the \mlblink algorithm found 3/7 anomalies, and achieved the best $\text{AUC} = 0.77$ at $t = 100$ and $t = 200$. \newline
 
 \begin{figure}
   \centering
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_all_bands/roc_3_anomalies_t_200_all_bands.png}
+  ]{report/images/results/250_all_bands/250_all_bands_3_anomalies_t_200.png}
   \caption{ROC curve and AUC of the evaluation of the \mlblink algorithm using 250 projections for a total of 200 time steps.}
   \label{fig:evaluation:roc-curve}
 \end{figure}
 
 As explained in section \ref{sect:meth:evaluation}, the discrimination threshold used to create the ROC curve is ``sweeping'' the entire range of $v$ values from $\min(v)$ up to $\max(v)$ in a time step $t$. It is thus reasonable that for all time steps, the ROC curve in figure \ref{fig:evaluation:roc-curve} starts with an ascend (i.e. more true positives) since the $v$ value is small and we expect more anomalies to evaluate to a $v$ value in that range. On the other hand, as the discrimination threshold is increased, the false positives rate starts to catch up and eventually dominates the ROC curve. The \mlblink algorithm was consistently able to find the first 3 or 4 anomalies listed in table \ref{table:results:anomalies-list}, but it could not find the last 3 - even when more time steps were used in the evaluation. This is also why the ROC curve in figure \ref{fig:evaluation:roc-curve} has three ``steps'' before reaching a $\text{TPR} = 1.0$; these three steps are the 3 anomalies that the \mlblink algorithm is unable to find because their $v$ value is too large. \newline
 
-Figure \ref{fig:evaluation:v-versus-t:found} shows how the $v$ value of known anomalies that were found versus normal observations changes as the \mlblink algorithm is taught over time. Additionally, the figure includes the $\min(v)$ value at each time step. As expected, the $v$ value of the known anomalies is close to the $\min(v)$ value of each time step, while the normal observations result in a larger $v$ value. Note the $v$ value of an anomaly might be smaller than the $\min(v)$ of a time step only after it has been found. The reason for this is that once an anomaly is found, it is filtered out of the potential candidates to be crawled, otherwise the \mlblink algorithm will continue to recommend it. In this scenario, the $v$ value of an anomaly after it has been found was computed for illustrative purposes only. The anomalies in figure \ref{fig:evaluation:v-versus-t:found} were found in the following order: \texttt{13.blue2.g} in $t = 124$, \texttt{56.blue2.g} at $t = 176$, and finally \texttt{13.blue1.g} in $t = 191$. \newline
+Figure \ref{fig:evaluation:v-versus-t:found} shows how the $v$ value of known anomalies that were found versus normal observations changes as the \mlblink algorithm is taught over time. Additionally, the figure includes the $\min(v)$ value at each time step. As expected, the $v$ value of the known anomalies is close to the $\min(v)$ value of each time step, while the normal observations result in a larger $v$ value. Note the $v$ value of an anomaly might be smaller than the $\min(v)$ of a time step only after it has been found. The reason for this is that once an anomaly is found, it is filtered out of the potential candidates to be crawled, otherwise the \mlblink algorithm will continue to recommend it. In this scenario, the $v$ value of an anomaly after it has been found was computed for illustrative purposes only. The anomalies in figure \ref{fig:evaluation:v-versus-t:found} were found in the following order: \texttt{56.blue2.g} in $t = 63$, \texttt{56.blue1.g} at $t = 146$, and finally \texttt{13.blue2.g} in $t = 154$. \newline
 
 \begin{figure}
   \centering
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_all_bands/found_3_anomalies_t_200_all_bands.png}
+  ]{report/images/results/250_all_bands/found_250_all_bands_3_anomalies_t_200.png}
   \caption{Evaluation of known anomalies (that the \mlblink algorithm found) versus normal observations in comparison to the $\min(v)$ value at each time step.}
   \label{fig:evaluation:v-versus-t:found}
 \end{figure}
 
-The same graph is shown in figure \ref{fig:evaluation:v-versus-t:not-found}, but this time it shows the anomalies the \mlblink algorithm could not find. Except for the \texttt{56.blue1.g} anomaly, the results are the opposite of what is expected, since the $v$ value of the anomalies is closer to the normal observations than it is to the $\min(v)$ value at each time step. \newline
+The same graph is shown in figure \ref{fig:evaluation:v-versus-t:not-found}, but this time it shows the anomalies the \mlblink algorithm could not find. Except for the \texttt{13.blue1.g} anomaly, the results are the opposite of what is expected, since the $v$ value of the anomalies is closer to the normal observations than it is to the $\min(v)$ value at each time step. \newline
 
 \begin{figure}
   \centering
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_all_bands/not_found_4_anomalies_t_200_all_bands.png}
+  ]{report/images/results/250_all_bands/not_found_250_all_bands_4_anomalies_t_200.png}
   \caption{Evaluation of known anomalies (that the \mlblink algorithm could not find) versus normal observations in comparison to the $\min(v)$ value at each time step.}
   \label{fig:evaluation:v-versus-t:not-found}
 \end{figure}
 
-The common denominator of the 4 anomalies the \mlblink algorithm evaluated to be close to the $\min(v)$ value of any time step is that these are all defined in the \texttt{g} color--band of \panstarrs. To further understand the capabilities of the \mlblink algorithm, each \panstarrs band was evaluated in isolation. The experiments were conducted one \panstarrs band at a time. That is, \panstarrs color--band \texttt{g} (versus \usno color--bands \texttt{blue1} and \texttt{blue2}) with a total of $2002$ observations and $4$ fake anomalies was tested in isolation. Next, \panstarrs color--band \texttt{r} (versus \usno color--bands \texttt{red1} and \texttt{red2}) with a total of $2002$ observations and $2$ fake anomalies was evaluated next. Finally, \panstarrs color--band \texttt{z} (versus \usno color--band \texttt{ir}) with a total of $1001$ observations and $1$ fake anomaly was tested. \newline
+The common denominator of the 4 anomalies the \mlblink algorithm evaluated to be close to the $\min(v)$ value of any time step is that these are all defined in the \texttt{g} color--band of \panstarrs. To further understand the capabilities of the \mlblink algorithm when using projections for dimensionality reduction, each \panstarrs band was evaluated in isolation. The experiments were conducted one \panstarrs band at a time. That is, \panstarrs color--band \texttt{g} (versus \usno color--bands \texttt{blue1} and \texttt{blue2}) with a total of $2002$ observations and $4$ fake anomalies was tested in isolation. Next, \panstarrs color--band \texttt{r} (versus \usno color--bands \texttt{red1} and \texttt{red2}) with a total of $2002$ observations and $2$ fake anomalies was evaluated next. Finally, \panstarrs color--band \texttt{z} (versus \usno color--band \texttt{ir}) with a total of $1001$ observations and $1$ fake anomaly was tested. \newline
 
 %%%%%%%%%%%% PanSTARR band g %%%%%%%%%%%%
 
-Figure \ref{fig:evaluation:roc:panstarrs:g} shows the ROC and AUC achieved by \mlblink when evaluating the \panstarrs color--band \texttt{g} in isolation. As expected, \mlblink does very well, consistently achieving an AUC of at least $0.90$ for all time steps shown in the plot. It found $3$ out of $4$ anomalies in the following order: \texttt{56.blue2.g} in $t = 69$, \texttt{13.blue2.g} at $t = 116$, and \texttt{56.blue1.g} in $t = 188$. Figure \ref{fig:evaluation:found:panstarrs:g} shows the evaluation of the $v$ value of known anomalies (that were found when testing \panstarrs color--band \texttt{g} in isolation) versus a normal observation. Once again, as expected, the plot shows \mlblink consistently evaluates the $v$ value of known anomalies to be significantly smaller than that of a normal observation.
+Figure \ref{fig:evaluation:roc:panstarrs:g} shows the ROC and AUC achieved by \mlblink when evaluating the \panstarrs color--band \texttt{g} in isolation. As expected, \mlblink does very well, consistently achieving an AUC of at least $0.90$ for all time steps shown in the plot. It found $3$ out of $4$ anomalies in the following order: \texttt{56.blue2.g} in $t = 55$, \texttt{13.blue2.g} at $t = 78$, and \texttt{56.blue1.g} in $t = 100$. Figure \ref{fig:evaluation:found:panstarrs:g} shows the evaluation of the $v$ value of known anomalies (that were found when testing \panstarrs color--band \texttt{g} in isolation) versus a normal observation. Once again, as expected, the plot shows \mlblink consistently evaluates the $v$ value of known anomalies to be significantly smaller than that of a normal observation.
 
 \begin{figure}[H]
   \centering
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_g/roc_3_anomalies_t_200_panstarr_g.png}
-  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{g} only (versus \usno color--bands \texttt{blue1} and \texttt{blue2}).}
+  ]{report/images/results/250_panstarr_g/250_panstarr_g_3_anomalies_t_200.png}
+  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{g} only (versus \usno color--bands \texttt{blue1} and \texttt{blue2}) using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:roc:panstarrs:g}
 \end{figure}
 
@@ -90,8 +90,8 @@ Figure \ref{fig:evaluation:roc:panstarrs:g} shows the ROC and AUC achieved by \m
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_g/found_3_anomalies_t_200_panstarr_g.png}
-  \caption{Evaluation of known anomalies that were found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{g} (versus \usno color--bands \texttt{blue1} and \texttt{blue2}) in isolation.}
+  ]{report/images/results/250_panstarr_g/found_250_panstarr_g_3_anomalies_t_200.png}
+  \caption{Evaluation of known anomalies that were found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{g} (versus \usno color--bands \texttt{blue1} and \texttt{blue2}) in isolation using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:found:panstarrs:g}
 \end{figure}
 
@@ -104,8 +104,8 @@ Figure \ref{fig:evaluation:roc:panstarrs:r} shows the ROC and AUC of the evaluat
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_r/roc_0_anomalies_t_200_panstarr_r.png}
-  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{r} only (versus \usno color--bands \texttt{red1} and \texttt{red2}).}
+  ]{report/images/results/250_panstarr_r/250_panstarr_r_0_anomalies_t_200.png}
+  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{r} only (versus \usno color--bands \texttt{red1} and \texttt{red2}) using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:roc:panstarrs:r}
 \end{figure}
 
@@ -114,22 +114,22 @@ Figure \ref{fig:evaluation:roc:panstarrs:r} shows the ROC and AUC of the evaluat
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_r/not_found_2_anomalies_t_200_panstarr_r.png}
-  \caption{Evaluation of known anomalies that were not found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{r} (versus \usno color--bands \texttt{red1} and \texttt{red2}) in isolation.}
+  ]{report/images/results/250_panstarr_r/not_found_250_panstarr_r_0_anomalies_t_200.png}
+  \caption{Evaluation of known anomalies that were not found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{r} (versus \usno color--bands \texttt{red1} and \texttt{red2}) in isolation using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:not-found:panstarrs:r}
 \end{figure}
 
 %%%%%%%%%%%% PanSTARR band z %%%%%%%%%%%%
 
-The results of the evaluation of \panstarrs color--band \texttt{z} are shown in figures \ref{fig:evaluation:roc:panstarrs:z} and \ref{fig:evaluation:not-found:panstarrs:z}. Once again, the \mlblink algorithm performance is poor, with an AUC lower than $0.5$, and unable to find the single anomaly defined in this experiment (\texttt{679.ir.z}). Moreover, similar to figure \ref{fig:evaluation:not-found:panstarrs:r}, the \mlblink algorithm consistently evaluates the known anomaly closer to a normal observation than to the $\min(v)$ value of any time step.
+The results of the evaluation of \panstarrs color--band \texttt{z} are shown in figures \ref{fig:evaluation:roc:panstarrs:z} and \ref{fig:evaluation:not-found:panstarrs:z}. Once again, the \mlblink algorithm performance is poor, with an overall AUC lower than $0.5$, and unable to find the single anomaly defined in this experiment (\texttt{679.ir.z}). Moreover, similar to figure \ref{fig:evaluation:not-found:panstarrs:r}, the \mlblink algorithm consistently evaluates the known anomaly closer to a normal observation than to the $\min(v)$ value of any time step.
 
 \begin{figure}[H]
   \centering
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_z/roc_0_anomalies_t_200_panstarr_z.png}
-  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{z} only (versus \usno color--band \texttt{ir}).}
+  ]{report/images/results/250_panstarr_z/250_panstarr_z_0_anomalies_t_200.png}
+  \caption{ROC curve and AUC achieved by the \mlblink algorithm when evaluating observations in the \panstarrs color--band \texttt{z} only (versus \usno color--band \texttt{ir}) using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:roc:panstarrs:z}
 \end{figure}
 
@@ -138,9 +138,9 @@ The results of the evaluation of \panstarrs color--band \texttt{z} are shown in 
   \includegraphics[
         width=0.7\textwidth,
         keepaspectratio
-  ]{report/images/results/250_panstarr_z/not_found_1_anomalies_t_200_panstarr_z.png}
-  \caption{Evaluation of known anomalies that were not found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{z} (versus \usno color--bands \texttt{ir}) in isolation.}
+  ]{report/images/results/250_panstarr_z/not_found_250_panstarr_z_0_anomalies_t_200.png}
+  \caption{Evaluation of known anomalies that were not found by the \mlblink algorithm when evaluating the \panstarrs color--band \texttt{z} (versus \usno color--bands \texttt{ir}) in isolation using 250 projections for dimensionality reduction.}
   \label{fig:evaluation:not-found:panstarrs:z}
 \end{figure}
 
-Overall (when using all \panstarrs color--bands), as seen in figure \ref{fig:evaluation:roc-curve}, the \mlblink algorithm performs substantially better than randomly predicting the label of an observation. It also finds more anomalies when crawling $5005$ observations (all \panstarrs color--bands) than what a random recommender system would be expected to do (i.e. $3 > 0.27$). Nonetheless, these results are primarily determined by the good performance of the \mlblink algorithm in the \panstarrs color--band \texttt{g}. The \mlblink algorithm performance significantly degrades when crawling the \panstarrs color--bands \texttt{r} and \texttt{z}. For both of these color--bands, it was shown the \mlblink algorithm achieves an AUC in the $0.5$ range (or worse), which is essentially the same as randomly assigning a label to an observation. Additionally, when crawling the \panstarrs color--bands \texttt{r} and \texttt{z}, the \mlblink algorithm was unable to find any of the fake anomalies defined in these color--bands.
+%Overall (when using all \panstarrs color--bands), as seen in figure \ref{fig:evaluation:roc-curve}, the \mlblink algorithm performs substantially better than randomly predicting the label of an observation. It also finds more anomalies when crawling $5005$ observations (all \panstarrs color--bands) than what a random recommender system would be expected to do (i.e. $3 > 0.27$). Nonetheless, these results are primarily determined by the good performance of the \mlblink algorithm in the \panstarrs color--band \texttt{g}. The \mlblink algorithm performance significantly degrades when crawling the \panstarrs color--bands \texttt{r} and \texttt{z}. For both of these color--bands, it was shown the \mlblink algorithm achieves an AUC in the $0.5$ range (or worse), which is essentially the same as randomly assigning a label to an observation. Additionally, when crawling the \panstarrs color--bands \texttt{r} and \texttt{z}, the \mlblink algorithm was unable to find any of the fake anomalies defined in these color--bands.
