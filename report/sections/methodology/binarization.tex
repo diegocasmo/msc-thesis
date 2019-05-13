@@ -2,7 +2,7 @@
 
 The \mlblink algorithm retrieves images from the $\beta$--pack dataset and performs a few operations in order to pre--process the images to later on evaluate them. In addition to the aforementioned dimensionality reduction through projections and normalization using the L2--norm, the images are also binarized. \newline
 
-Binarization is a process in which an input signal is transformed such that the resulting output consists of only two values. The \mlblink algorithm uses binarization with a fixed threshold (one for each source) as a pre--processing technique when retrieving missions. Algorithm \ref{pscode:retrieve-vector} shows pseudo--code which describes how a mission's vector is retrieved using binarization, dimensionality reduction (as described in section \ref{sect:theory:dim-reduction}), and normalization (section \ref{sect:theory:norm}). This process is applicable to both $\vect{x}$ and $\vect{y}$ and it is described in terms of $\vect{z}$ for illustrative purposes only.
+Binarization is a process in which an input signal is transformed such that the resulting output consists of only two values. The \mlblink algorithm uses binarization with a fixed threshold (one for each source) as a pre--processing technique when retrieving missions. Algorithm \ref{pscode:retrieve-vector} shows pseudo--code which describes how a mission's vector is retrieved using binarization, dimensionality reduction (as described in section \ref{sect:theory:dim-reduction}), and normalization (section \ref{sect:theory:norm}). This process is applicable to both $\vect{x}$ and $\vect{y}$, and it is described in terms of $\vect{z}$ for illustrative purposes only. Note line number $5$ is replaced by average pooling as a dimensionality reduction technique when appropriate.
 
 \vspace{0.4cm}
 \begin{algorithm}[H]
@@ -12,7 +12,7 @@ Binarization is a process in which an input signal is transformed such that the 
             Let $i$ be an image key, and $j$ be an image band \\
             Retrieve image $\vect{z}_{i,j}$ according to $i$, $j$ from $\vect{z}$ source \\
             $\vect{bw} \gets \vect{z}_{i,j}$ binarized with fixed threshold $t_z$ \\
-            $\vect{zs} \gets \vect{bw} \cdot \vect{P}$ where $\vect{P}$ size is $n_{projections} \times n_z$ \\
+            $\vect{zs} \gets \vect{bw} \cdot \vect{P}$ where $\vect{P}$ size is $n_{projections} \times n_z$ (or use average pooling) \\
             \Return $\vect{zs}$ normalized using the L2--norm
         }
     \caption{Pseudo--code to retrieve a vector given an image key $i$, an image band $j$, and the desired number of projections to use for dimensionality reduction.}

@@ -10,9 +10,15 @@
 \usepackage{todonotes}
 \usepackage{pdflscape}  % provides "landscape" environment
 \usepackage{bm}
-\usepackage[]{algorithm2e}
+\usepackage[linesnumbered]{algorithm2e}
 \usepackage{ upgreek }
 \usepackage{multirow}
+
+% Pooling figure packages
+\usepackage{bm}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing}
 
 % No indentation
 \setlength{\parindent}{0pt}
@@ -43,3 +49,20 @@
 
 % Custom commands
 \newcommand{\blankpage}{\clearpage\mbox{}\clearpage}
+
+% Pooling figure commands
+\definecolor{c1}{HTML}{9ACFC6}
+\definecolor{c2}{HTML}{DABBD6}
+\definecolor{c3}{HTML}{CBDCB9}
+\definecolor{c4}{HTML}{9AC3E1}
+\definecolor{c5}{HTML}{DEBBA5}
+\definecolor{c6}{HTML}{C4DDE5}
+\newcommand*{\xMin}{0}%
+\newcommand*{\xMax}{4}%
+\newcommand*{\yMin}{0}%
+\newcommand*{\yMax}{4}%
+
+\newcommand*{\xMinR}{8.9}%
+\newcommand*{\xMaxR}{10.9}%
+\newcommand*{\yMinR}{1}%
+\newcommand*{\yMaxR}{3}%

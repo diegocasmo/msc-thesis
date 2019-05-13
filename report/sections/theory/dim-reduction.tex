@@ -1,13 +1,15 @@
 \section{Dimensionality Reduction} \label{sect:theory:dim-reduction}
 % What is dimensionality?
 % What is the curse of dimensionality?
-In machine learning and statistics, it is common to refer to the number of features that make up an observation as its dimensionality. As the number of features that describe such observation increases, it is likely that one will encounter the so called ``curse of dimensionality''. The curse of dimensionality is the manifestation of all phenomena that occurs when dealing with high--dimensional data, and that have most often unfortunate consequences on the behavior and performances of learning algorithms \cite{article:curse-of-dim}. \newline
+In machine learning and statistics, it is common to refer to the number of features that make up an observation as its dimensionality. As the number of features that describe an observation increases, it is likely that one will encounter the so called ``curse of dimensionality''. The curse of dimensionality is the manifestation of all phenomena that occurs when dealing with high--dimensional data, and that have most often unfortunate consequences on the behavior and performances of learning algorithms \cite{article:curse-of-dim}. \newline
 
 % What is dimensionality reduction?
 Dimensionality reduction refers to the process of reducing the number of features that describe an observation. Dimensionality reduction can be performed by either using feature selection (selecting a subset of the original features) or feature extraction (deriving new features from the original features). Dimensionality reduction can help avoid the curse of dimensionality, eliminate unsuitable features, reduce noise, and reduce the amount of time and memory required by machine learning or statistical algorithms to execute. \newline
 
-% How does this implementation of the ML-Blink algorithm do dimensionality reduction?
-The implementation of the \mlblink algorithm in this report uses a linear inner product to project a pair of items $(\vect{x}_i, \vect{y}_j)$ to a lower dimension. The choice to use an inner product as a dimensionality reduction technique was made due to its simplicity, performance, and the results it was able to achieve. \newline
+The \mlblink algorithm implementation written for this report was evaluated using two well known dimensionality reduction techniques: projections and pooling.
+
+\subsection{Projections} \label{sect:theory:dim-reduction:proj}
+Projections use a linear inner product to project a pair of items $(\vect{x}_i, \vect{y}_j)$ to a lower dimension. Projections were chosen as one of the dimensionality reduction techniques to implement due to its simplicity and computational performance. \newline
 
 To better illustrate this method, consider a vector $\vect{x}_i$ where $n_x=3$ and a matrix $\vect{P}$ of size $3 \times 9$ as in equation \ref{eq:proj}.
 
@@ -30,4 +32,86 @@ To better illustrate this method, consider a vector $\vect{x}_i$ where $n_x=3$ a
     \end{split}
 \end{equation}
 
-As shown in equation \ref{eq:proj}, the resulting vector $\vect{p}$ has only 3 dimensions. Each of these dimensions was created by adding a vector component and the next two consecutive components next to it until all elements in the initial vector $\vect{x}_i$ were processed. The linear inner product dimensionality reduction technique is essentially a form of feature extraction, as new features of the vector $\vect{x}_i$ were derived from its original components.
+As shown in equation \ref{eq:proj}, the resulting vector $\vect{p}$ has only 3 dimensions. Each of these dimensions were created by adding a vector component and the next two consecutive components next to it until all elements in the initial vector $\vect{x}_i$ were processed. The linear inner product dimensionality reduction technique is essentially a form of feature extraction, as new features of the vector $\vect{x}_i$ were derived from its original components.
+
+\subsection{Pooling} \label{sect:theory:dim-reduction:pooling}
+
+The objective of pooling is to change a collective feature representation into a new, more usable one that maintains important information while eliminating irrelevant detail \cite{article:pooling}. The pooling operation is typically a sum, average, or a max operation performed within a kernel. \newline
+
+The pooling implementation made for this report uses average pooling with non--overlapping kernels and replaces out--of--boundary pixel values intensities with zero. Pooling was selected as an alternative dimensionality reduction technique to evaluate whether the spatial structure of pooling neighborhoods (within the kernel) could benefit the representation of the input vector, and thus help the model to better encode features in the weight matrix $\vect{D}$. \newline
+
+Figure \ref{fig:average-pooling} illustrates how average pooling with a kernel of size $2 \times 2$ works. Similar to projections, pooling is also a feature extraction dimensionality reduction technique.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \fill [c1] (0, 0) rectangle (2, 2);
+        \fill [c2]   (2, 0) rectangle (4, 2);
+        \fill [c4] (0, 2) rectangle (2, 4);
+        \fill [c5]   (2, 2) rectangle (4, 4);
+        
+        \fill [c1]  (8.9, 1) rectangle (9.9, 2);
+        \fill [c2]   (9.9, 1) rectangle (10.9, 2);
+        \fill [c4]  (8.9, 2) rectangle (9.9, 3);
+        \fill [c5]   (9.9, 2) rectangle (10.9, 3);
+    
+        \foreach \i in {\xMin,...,\xMax} {
+            \draw [very thin,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
+        }
+        \foreach \i in {\yMin,...,\yMax} {
+            \draw [very thin,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
+        }
+    
+        \foreach \i in {\xMin,2,...,\xMax} {
+            \draw [thick,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
+        }
+        \foreach \i in {\yMin,2,...,\yMax} {
+            \draw [thick,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
+        }
+
+        \node at (0.5, 3.5) {0};
+        \node at (1.5, 3.5) {1};
+        \node at (2.5, 3.5) {2};
+        \node at (3.5, 3.5) {3};
+        %
+        \node at (0.5, 2.5) {4};
+        \node at (1.5, 2.5) {5};
+        \node at (2.5, 2.5) {6};
+        \node at (3.5, 2.5) {7};
+        %
+        \node at (0.5, 1.5) {8};
+        \node at (1.5, 1.5) {9};
+        \node at (2.5, 1.5) {10};
+        \node at (3.5, 1.5) {11};
+        %
+        \node at (0.5, 0.5) {12};
+        \node at (1.5, 0.5) {13};
+        \node at (2.5, 0.5) {14};
+        \node at (3.5, 0.5) {15};
+        
+        \draw[draw=black,line width=12pt,-{Latex[length=9mm]}] (4.5, 2)  -- (8.5,2);
+        \node[] at (6.3, 2.5) {$2 \times 2$ average pooling};
+    
+        \foreach \i in {\xMinR,...,\xMaxR} {
+            \draw [thick,gray] (\i,\yMinR) -- (\i,\yMaxR)  node [below] at (\i,\yMinR) {};
+        }
+        \foreach \i in {\yMinR,...,\yMaxR} {
+            \draw [thick,gray] (\xMinR,\i) -- (\xMaxR,\i) node [left] at (\xMinR,\i) {};
+        }
+    
+        \node at (9.4, 2.5) {2.5};
+        \node at (10.4, 2.5) {4.5};
+        %
+        \node at (9.4, 1.5) {10.5};
+        \node at (10.4, 1.5) {12.5};
+    
+        \draw [decorate,decoration={brace,amplitude=4pt},xshift=-2pt,yshift=0pt]
+            (0,2) -- (0,4) node [black,midway,xshift=-0.3cm] {\footnotesize $2$};
+    
+        \draw [decorate,decoration={brace,amplitude=4pt},xshift=0pt,yshift=2pt]
+            (0,4) -- (2,4) node [black,midway,yshift=+0.3cm] {\footnotesize $2$};
+    \end{tikzpicture}
+    \caption{Example of how non--overlapping average pooling with a kernel of size $2 \times 2$ is performed.}
+    \label{fig:average-pooling}
+\end{figure}
