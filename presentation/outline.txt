@@ -1,0 +1,42 @@
+Outline
+> Introduction
+  + Background and Motivation
+  + Recommender Systems
+> Theory
+  + Supervised Learning
+  + Online Learning
+  + Active Learning
+  + The ML-Blink Algorithm
+  + Normalization
+  + Dimensionality Reduction
+    - Projections
+    - Pooling
+> Methodology
+  + Datasets
+  + Crawling Candidates
+  + Explicit Representation
+  + Implicit Representation
+  + Image Retrieval
+  + Parallelism
+  + Evaluation
+> Case Study
+  + Introduction
+  + Matching Accuracy
+  + Architecture
+    - Server Architecture
+    - Client Architecture
+  + Implementation
+    - ML-Blink UI
+      > ROI
+      > Smoothing
+      > Binarization
+      > Object Detection
+      > Object Size Normalization
+      > Accuracy
+    - ML-Blink API
+      > The Active Set
+      > Potential Anomalies
+      > Crawling Candidates
+  + Results
+> General Discussion
+> Conclusion and Future Work
