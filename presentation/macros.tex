@@ -1,0 +1,30 @@
+%% Useful packages:
+\usepackage[boxed]{algorithm}   % drop [boxed] is no box around algorithm wanted
+\usepackage[noend]{algorithmic} % drop [noend] if endif, endwhile, etc wanted
+\renewcommand{\algorithmiccomment}[1]{\hfill // #1}
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage[british]{babel}
+\usepackage{booktabs}
+\usepackage{cancel}  % provides \cancel
+\usepackage{color}
+\usepackage{colortbl}  % provides \cellcolor
+\usepackage[nocenter]{cwpuzzle}  % provides Sudoku
+%\usepackage{enumitem}  % provides noitemsep, topsep, parsep, partopsep
+\usepackage{graphicx}
+\usepackage{logicpuzzle}  % provides kakuro
+\definecolor{kakuro}{RGB}{155,206,167}
+\kakurosetup{color=kakuro}
+\usepackage{mathtools} \mathtoolsset{showonlyrefs}  % provides \coloneqq
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{pdflscape}  % provides "landscape" environment
+\usepackage{pgfplots} \pgfplotsset{compat=1.12}  % was 1.9, but gave errors?!
+%\usepackage{rotating}  % provides "sideways[table]" environments
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,calc,trees,positioning,decorations.markings}
+\usepackage{xspace}
+\usepackage{hyperref}
+\hypersetup{linkcolor=black}  % should always be last package

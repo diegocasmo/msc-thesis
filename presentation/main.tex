@@ -1,0 +1,59 @@
+\documentclass[usenames,dvipsnames]{beamer}
+\usepackage[utf8]{inputenc}
+\usetheme[numbers,sidebarshades]{UU}
+
+\usepackage{helvet}
+\usepackage{courier}
+
+\input{macros}
+\hypersetup{colorlinks=true,urlcolor=blue}
+
+%% Colours (used only in macros.tex):
+\newcommand<>{\blue}[1]{{\color#2{blue}#1}}
+\newcommand<>{\green}[1]{{\color#2{OliveGreen}#1}}
+\newcommand<>{\red}[1]{{\color#2{red}#1}}
+
+% Remove dropshadow from blocks, but they are still rounded:
+\setbeamertemplate{blocks}[rounded][shadow=false]
+% Remove gradient below header in blocks:
+\makeatletter
+\pgfdeclareverticalshading[lower.bg,upper.bg]{bmb@transition}{200cm}{color(0pt)=(lower.bg); color(4pt)=(lower.bg); color(4pt)=(upper.bg)}
+\makeatother
+% Non-gradient bulllets:
+\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}%[circle]
+\setbeamertemplate{subsection in toc}[circle]
+
+\title[Topic]{VASCO: Developing AI-Crawlers for ML-Blink}
+\author{Diego Castillo}
+\institute{Uppsala University \\ Sweden}
+\date{Course 1DT540, \\
+  Degree Project E in Computer Science: \\
+  project presentation of \today}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\begin{document}
+
+    \begin{frame}[plain]
+      \titlepage
+    \end{frame}
+    
+    \begin{frame}{Outline}
+      \tableofcontents
+    \end{frame}
+    
+    \input{presentation/sections/example.tex}
+
+\end{document}
