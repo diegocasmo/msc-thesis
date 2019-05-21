@@ -1,0 +1,121 @@
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Created by Kristiaan Pelckmans
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Created by Kristiaan Pelckmans
+        \item Consider a pair of vectors $\vect{x}_i$ and $\vect{y}_j$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Created by Kristiaan Pelckmans
+        \item Consider a pair of vectors $\vect{x}_i$ and $\vect{y}_j$
+        \item Goal is to create a scoring function which is able to recommend pairs of items that are more likely to contain anomalies
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Created by Kristiaan Pelckmans
+        \item Consider a pair of vectors $\vect{x}_i$ and $\vect{y}_j$
+        \item Goal is to create a scoring function which is able to recommend pairs of items that are more likely to contain anomalies
+        \item Let scoring function be defined as 
+            \begin{equation} \label{eq:v-explicit}
+                v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j  
+            \end{equation}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Furthermore, consider a pair of items $\vect{x}_i$ and $\vect{y}_j$ such that $n_x = 2$ and $n_y = 2$
+            \begin{equation} \label{eq:v-flesh-out:short}
+                \begin{split} 
+                    v &= 
+                        \begin{bmatrix}
+                            x_{i,1} & x_{i,2} \\
+                        \end{bmatrix}
+                        \begin{bmatrix}
+                            d_{1,1} & d_{1,2} \\
+                            d_{2,1} & d_{2,2} \\
+                        \end{bmatrix}
+                        \begin{bmatrix}
+                            y_{j,1} \\
+                            y_{j,2} \\
+                        \end{bmatrix} \\
+                    &=
+                        \begin{bmatrix}
+                            x_{i,1}d_{1,1} + x_{i,2}d_{2,1} & x_{i,1}d_{1,2} + x_{i,2}d_{2,2} \\
+                        \end{bmatrix}    
+                        \begin{bmatrix}
+                            y_{j,1} \\
+                            y_{j,2} \\
+                        \end{bmatrix} \\
+                    &= 
+                        y_{j,1}x_{i,1}d_{1,1} + y_{j,2}x_{i,1}d_{1,2} + y_{j,1}x_{i,2}d_{2,1} + y_{j,2}x_{i,2}d_{2,2} \\
+                \end{split}
+            \end{equation}
+        \item Intuitively, the relevance of two features, say $y_{j,1}$ and $x_{i,1}$ is determined by the weight $d_{1,1}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item How should the matrix $\vect{D}$ weights be learned?
+            \begin{itemize}
+                \item Recommend item with the minimum $v$ value
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item How should the matrix $\vect{D}$ weights be learned?
+            \begin{itemize}
+                \item Recommend item with the minimum $v$ value
+            \end{itemize}
+        \item How should the weights of the matrix $\vect{D}$ be updated?
+            \begin{equation} \label{eq:v-explicit:update} \footnote{The full proof of the \mlblink algorithm and its mathematical properties will be addressed in a subsequent paper. This report focuses in the implementation and evaluation of the algorithm only.}
+                \vect{D}_t = \vect{D}_{t-1} + \vect{x}_{i} \vect{y}_{j}^T
+            \end{equation}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Equation $v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j$ can also be implicitly represented
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Equation $v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j$ can also be implicitly represented
+        \item Update rule can be re--written as 
+            \begin{equation} \nonumber
+                \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
+            \end{equation}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{ML-Blink Algorithm}
+    \begin{itemize}
+        \item Equation $v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j$ can also be implicitly represented
+        \item Update rule can be re--written as 
+            \begin{equation} \nonumber
+                \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
+            \end{equation}
+        \item Using the implicit representation of $\vect{D}$
+            \begin{equation} \label{eq:v-implicit}
+                \begin{split}
+                    v &= \vect{x}_i^T \vect{D} \vect{y}_j \\
+                    &= \vect{x}_i^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_j \\
+                    &= ( x_i^T \cdot v_1 )  ( w_1^T \cdot y_j ) + \cdots + ( x_i^T \cdot v_n )  ( w_n^T \cdot y_j ) \\
+                \end{split}
+            \end{equation}
+    \end{itemize}
+\end{frame}
