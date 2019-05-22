@@ -1,0 +1,34 @@
+\begin{frame}{Crawling Candidates}
+    \begin{itemize}
+        \item[\xspace]
+        \begin{algorithm}[H]
+            \SetAlgoLined
+            \SetKwProg{FMain}{generate\_candidate}{:}{end}
+                \FMain{} {
+                    \For{$t = 0, 1, 2, ...$} {
+                        Select a set of \texttt{missions} to crawl \\
+                        \For{\textup{\texttt{mission}} \textup{in} \textup{\texttt{missions}}} {
+                            Compute \texttt{mission}'s $v$ value \\
+                        }
+                        Select \texttt{mission} with $\text{min}(v)$ as \texttt{candidate} \\
+                        \Return \texttt{candidate}
+                    }
+                }
+            \caption{Pseudo--code for the basic building block \newline of the \mlblink algorithm.}
+            \label{pscode:ml-blink}
+        \end{algorithm}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Crawling Candidates}
+    \begin{itemize}
+        \item First time the matrix $\vect{D}$ is retrieved, all of its weights are equal to $0$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Crawling Candidates}
+    \begin{itemize}
+        \item First time the matrix $\vect{D}$ is retrieved, all of its weights are equal to $0$
+        \item Ties are broken randomly
+    \end{itemize}
+\end{frame}

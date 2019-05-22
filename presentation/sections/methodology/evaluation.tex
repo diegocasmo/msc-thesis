@@ -1,0 +1,64 @@
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item The \mlblink algorithm can be described as a binary classifier
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item The \mlblink algorithm can be described as a binary classifier
+        \item Receiver operating characteristic (ROC) curve is a suitable technique to study an \mlblink model as its discrimination threshold is changed
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item A confusion matrix
+            \begin{table}[H]
+                \begin{tabular}{cc|cc}
+                    \multicolumn{2}{c}{}
+                    & \multicolumn{2}{c}{Actual} \\
+                    &       &   Anomaly &   Normal \\ 
+                    \cline{2-4}
+                    \multirow{2}{*}{Predicted}
+                        & Anomaly         & TP   & FP  \\
+                        & Normal    & FN   & TN  \\ 
+                        \cline{2-4}
+                \end{tabular}
+                \caption{A confusion matrix table for the \mlblink algorithm. The model predictions are categorized as true positive (TP), false positive (FP), false negative (FP), and true negative (TN).}
+                \label{table:confusion-matrix}
+            \end{table}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item The ROC curve is a plot of the true positive rate (TPR) against the false positive rate (FPR)
+        \item[\xspace]
+            \begin{equation} \label{eq:tpr}
+                \text{TPR} = \dfrac{\text{TP}}{\text{P}}
+            \end{equation}
+            
+            \begin{equation} \label{eq:fpr}
+                \text{FPR} = \dfrac{\text{FP}}{\text{N}}
+            \end{equation}  
+        \item P = positives (anomaly), N = negatives (normal)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item The $v$ value will act as the model discrimination threshold
+        \item The ROC curve will plot the TPR/FPR ``sweeping'' the range of $v$ values from $\text{min}(v)$ to $\text{max}(v)$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Evaluation}
+    \begin{itemize}
+        \item Common to show the Area Under Curve (AUC) when plotting the ROC curve
+        \item Equivalent to the probability that a classifier will rank a randomly chosen positive observation higher than a randomly chosen negative observation \cite{article:roc-analysis}
+            \begin{itemize}
+                \item Assuming normalize units are being used
+            \end{itemize}
+    \end{itemize}
+\end{frame}
