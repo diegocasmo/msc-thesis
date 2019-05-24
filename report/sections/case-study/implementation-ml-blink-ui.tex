@@ -66,14 +66,14 @@ The choice to use a ROI to measure the quality of a matching was made based on t
       \caption{\panstarrs ROI}
       \label{fig:b:panstarr-0-g-roi}
     \end{subfigure}
-    \caption{Resulting ROI from the figures shown in figure \ref{fig:mission-0}. The ROI were computed as if the \panstarrs image was placed exactly on top of the \usno image in the UI .}
+    \caption{Resulting ROI from the figures shown in figure \ref{fig:mission-0}. The ROI is computed as if the \panstarrs image was placed exactly on top of the \usno image in the UI.}
     \label{fig:mission-0:roi}
 \end{figure}
 
 \subsubsection{Smoothing} \label{subsubsect:case-study:impl:smooth}
 Once the ROI has been computed for both images, the pixel value intensities of the RGBA channels of each image in their respective ROI are retrieved. Since the images are in gray--scale format, all RGB pixel value intensities at the same location are equal, which means that the remaining computations can be performed using a single channel. As a result, only the pixel value intensities of the R channel are smoothed using a mean filter, which facilitates object detection in the upcoming steps. \newline
 
-The mean filter uses a $3 \times 3$ kernel which scans the entire ROI of each image and replaces the center pixel where the kernel is located at with the mean pixel value intensity of the entire ROI of each image. The mean pixel value intensity is also used for out--of--boundary pixels when placing the kernel in the border pixels of the ROI.
+The mean filter uses a $3 \times 3$ kernel which scans the entire ROI of each image and replaces the center pixel where the kernel is located at with the mean pixel value intensity of the elements within the kernel. The mean pixel value intensity of the entire ROI is used for out--of--boundary pixels when placing the kernel in the border pixels of the ROI.
 
 \subsubsection{Binarization} \label{subsubsect:case-study:impl:binarization}
 The next step is to binarize the smoothed pixel value intensities of each image's ROI. The binarization process simply replaces all pixel value intensities larger than a specified threshold with 255, while pixel value intensities less or equal to the threshold are set to 0. Figure \ref{fig:mission-0:bw} shows the resulting ROI after both images have been binarized. The matching algorithm uses a fixed threshold of 80 for \usno and 110 for \panstarrs.
