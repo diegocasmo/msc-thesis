@@ -1,19 +1,6 @@
 \begin{frame}{ML-Blink UI Implementation}
     \begin{itemize}
         \item Allows to match images of distinct datasets of the same location in the night sky
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{ML-Blink UI Implementation}
-    \begin{itemize}
-        \item Allows to match images of distinct datasets of the same location in the night sky
-        \item Goal is to provide intuitive feedback about the quality of the current matching 
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{ML-Blink UI Implementation}
-    \begin{itemize}
-        \item Allows to match images of distinct datasets of the same location in the night sky
         \item Goal is to provide intuitive feedback about the quality of the current matching 
         \item The matching algorithm
             \begin{itemize}
@@ -80,21 +67,6 @@
 \begin{frame}{Smoothing}
     \begin{itemize}
         \item Pixel value intensities are smoothed using a mean filter
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Smoothing}
-    \begin{itemize}
-        \item Pixel value intensities are smoothed using a mean filter
-        \item Facilitates object detection later on
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Smoothing}
-    \begin{itemize}
-        \item Pixel value intensities are smoothed using a mean filter
-        \item Facilitates object detection later on
-        \item $3 \times 3$ kernel that scans the entire ROI
     \end{itemize}
 \end{frame}
 
@@ -180,19 +152,6 @@
         \end{subfigure}
         \caption{Original objects replaced by equal sized objects in \usno  and \panstarrs. Squared objects of size $9$ are used for \usno images and $13$ for \panstarrs images.}
     \end{figure}
-\end{frame}
-
-\begin{frame}{Accuracy}
-    \begin{itemize}
-        \item Number of remaining bright pixel value intensities when the \usno image is subtracted from the \panstarrs image
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Accuracy}
-    \begin{itemize}
-        \item Number of remaining bright pixel value intensities when the \usno image is subtracted from the \panstarrs image
-        \item Let \usno image be $\text{xs}$, \panstarrs image $\text{ys}$, and $\text{zs} = \text{xs} - \text{ys}$
-    \end{itemize}
 \end{frame}
 
 \begin{frame}{Accuracy}

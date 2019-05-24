@@ -1,23 +1,120 @@
 \begin{frame}{ML-Blink API Implementation}
-    % \begin{itemize}
-    %     \item
-    % \end{itemize}
+    \begin{itemize}
+        \item MongoDB database to persist data
+        \item Celery asynchronous task queue to schedule and execute time consuming operations
+        \item The \mlblink algorithm implementation
+        \begin{itemize}
+            \item The active set
+            \item Potential anomalies
+            \item Crawling candidates
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{The Active Set}
-    % \begin{itemize}
-    %     \item
-    % \end{itemize}
+    \begin{itemize}
+        \item A MongoDB collection comprised of missions which are considered to be normal
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The Active Set}
+    \begin{table}[H]
+        \centering
+            \begin{tabular}{| l | m{5cm} |} 
+                \hline
+                    \texttt{image\_key} & An integer which identifies an image \\
+                \hline
+                    \texttt{usno\_band} & The \usno band of the image \\
+                \hline
+                    \texttt{panstarr\_band} & The \panstarrs band of the image \\
+                \hline
+                    \texttt{usno\_vector}  & \multicolumn{1}{m{5cm}|}{The resulting vector after processing the original \usno image.} \\
+                \hline
+                    \texttt{panstarr\_vector} & \multicolumn{1}{m{5cm}|}{The resulting vector after processing the original \panstarrs image.} \\
+                \hline
+            \end{tabular}
+        \caption{A description of the schema of a document of the active set collection.}
+    \end{table}
+\end{frame}
+
+\begin{frame}{The Active Set}
+    \begin{itemize}
+        \item Data sent by the UI is persisted in MongoDB
+        \item A background task is created (\texttt{tprocess\_created\_mission})
+        \item A mission is inserted in the active set if its \texttt{accuracy} is at least as good as its \texttt{accuracy\_threshold}
+        \item The \texttt{tcrawl\_candidates} task is called on success
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Potential Anomalies}
-    % \begin{itemize}
-    %     \item
-    % \end{itemize}
+    \begin{itemize}
+        \item A MongoDB collection comprised of missions which are likely to contain an anomaly(s)
+        \item A mission is inserted to the potential anomalies collection when 
+            \begin{itemize}
+                \item A mission's~\texttt{accuracy} is less than its~\texttt{accuracy\_threshold} 
+                \item The mission's images position overlap
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Potential Anomalies}
+    \begin{table}[H]
+        \centering
+            \begin{tabular}{| l | m{5cm} |} 
+                \hline
+                    \texttt{image\_key} & An integer which identifies an image \\
+                \hline
+                    \texttt{usno\_band} & The \usno band of the image \\
+                \hline
+                    \texttt{panstarr\_band} & The \panstarrs band of the image \\
+                \hline
+            \end{tabular}
+        \caption{A description of the schema of a document of the potential anomalies collection.}
+    \end{table}
 \end{frame}
 
 \begin{frame}{Crawling Candidates}
-    % \begin{itemize}
-    %     \item
-    % \end{itemize}
+    \begin{itemize}
+        \item Uses the Celery ``chord'' API to crawl for candidates
+        \item Generate a list of potential candidates list
+        \item Missions known to be potential anomalies are filtered out
+        \item The filtered potential candidates list is split into chunks
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Crawling Candidates}
+    \begin{itemize}
+        \item Celery workers compute $v$ value of all candidates in their chunk
+        \item Fixed binarization threshold of $60$ for \usno and $220$ for \panstarrs
+        \item The result of each worker is reduced and $\min(v)$ selected
+        \item Candidate with $\min(v)$ is inserted in the $\texttt{candidates}$ collection
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Crawling Candidates}
+    \begin{table}[H]
+        \centering
+            \begin{tabular}{| l | m{5cm} |} 
+                \hline
+                    \texttt{image\_key} & An integer which identifies an image \\
+                \hline
+                    \texttt{usno\_band} & The \usno band of the image \\
+                \hline
+                    \texttt{panstarr\_band} & The \panstarrs band of the image \\
+                \hline
+                    \texttt{v} & \multicolumn{1}{m{5cm}|}{The \texttt{v} value of this candidate computed by the AI--Crawler} \\
+                \hline
+            \end{tabular}
+        \caption{A description of the schema of a document of the candidates collection.}
+        \label{table:case-study:impl:candidates:schema}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Crawling Candidates}
+    \begin{itemize}
+        \item When the \mlblinkui requests a new mission, the \mlblinkapi selects candidate with $\min(v)$
+        \item Ties are broken randomly
+        \item Selected candidate is removed from collection just before it's served to the client
+        \item If there are no candidates, a random observation from the $\beta$--pack is selected
+    \end{itemize}
 \end{frame}
