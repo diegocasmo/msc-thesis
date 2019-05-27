@@ -1,3 +1,4 @@
+\usepackage{afterpage}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
@@ -48,7 +49,11 @@
 \newcommand{\panstarrs}{Pan--STARRS1\xspace}
 
 % Custom commands
-\newcommand{\blankpage}{\clearpage\mbox{}\clearpage}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 % Pooling figure commands
 \definecolor{c1}{HTML}{9ACFC6}

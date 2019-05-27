@@ -5,24 +5,30 @@
 
 \begin{document}
     % Cover
-    \input{report/sections/cover/cover.tex} \blankpage
+    \thispagestyle{empty}
+    \input{report/sections/cover/cover.tex}
     
-    % Abstract and acknowledgments
-    \input{report/sections/abstract/abstract.tex} \newpage
-    \input{report/sections/acknowledgments/acknowledgments.tex} \newpage
+    \afterpage{\blankpage}
+    
+    % Abstract
+    \input{report/sections/abstract/abstract.tex} 
+    
+    \afterpage{\blankpage}
     
     % Table of contents
+    \clearpage
+    \pagenumbering{arabic} 
     \setcounter{tocdepth}{5}
-    \tableofcontents \newpage
+    \tableofcontents
     
     % Sections
     \input{report/sections/introduction/introduction.tex}
     \input{report/sections/theory/theory.tex}
     \input{report/sections/methodology/methodology.tex}
     \input{report/sections/case-study/case-study.tex}
-    % \input{report/sections/discussion/discussion.tex}
     \input{report/sections/conclusion/conclusion.tex}
-    
+    \input{report/sections/acknowledgments/acknowledgments.tex}
+
     % References
     \bibliographystyle{plain}
     \bibliography{references}
