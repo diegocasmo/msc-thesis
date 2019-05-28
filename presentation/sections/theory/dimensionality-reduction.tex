@@ -34,76 +34,76 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Dimensionality Reduction}
-    \begin{itemize}
-        \item Pooling: change a collective feature representation into a new, more usable one that maintains important information while eliminating irrelevant detail \cite{article:pooling}
-            \begin{figure}[H]
-                \centering
-                \begin{tikzpicture}
-                    \fill [c1] (0, 0) rectangle (2, 2);
-                    \fill [c2]   (2, 0) rectangle (4, 2);
-                    \fill [c4] (0, 2) rectangle (2, 4);
-                    \fill [c5]   (2, 2) rectangle (4, 4);
+% \begin{frame}{Dimensionality Reduction}
+%     \begin{itemize}
+%         \item Pooling: change a collective feature representation into a new, more usable one that maintains important information while eliminating irrelevant detail \cite{article:pooling}
+%             \begin{figure}[H]
+%                 \centering
+%                 \begin{tikzpicture}
+%                     \fill [c1] (0, 0) rectangle (2, 2);
+%                     \fill [c2]   (2, 0) rectangle (4, 2);
+%                     \fill [c4] (0, 2) rectangle (2, 4);
+%                     \fill [c5]   (2, 2) rectangle (4, 4);
                     
-                    \fill [c1]  (4.9, 1) rectangle (5.9, 2);
-                    \fill [c2]   (5.9, 1) rectangle (6.9, 2);
-                    \fill [c4]  (4.9, 2) rectangle (5.9, 3);
-                    \fill [c5]   (5.9, 2) rectangle (6.9, 3);
+%                     \fill [c1]  (4.9, 1) rectangle (5.9, 2);
+%                     \fill [c2]   (5.9, 1) rectangle (6.9, 2);
+%                     \fill [c4]  (4.9, 2) rectangle (5.9, 3);
+%                     \fill [c5]   (5.9, 2) rectangle (6.9, 3);
                 
-                    \foreach \i in {\xMin,...,\xMax} {
-                        \draw [very thin,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
-                    }
-                    \foreach \i in {\yMin,...,\yMax} {
-                        \draw [very thin,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
-                    }
+%                     \foreach \i in {\xMin,...,\xMax} {
+%                         \draw [very thin,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
+%                     }
+%                     \foreach \i in {\yMin,...,\yMax} {
+%                         \draw [very thin,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
+%                     }
                 
-                    \foreach \i in {\xMin,2,...,\xMax} {
-                        \draw [thick,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
-                    }
-                    \foreach \i in {\yMin,2,...,\yMax} {
-                        \draw [thick,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
-                    }
+%                     \foreach \i in {\xMin,2,...,\xMax} {
+%                         \draw [thick,gray] (\i,\yMin) -- (\i,\yMax)  node [below] at (\i,\yMin) {};
+%                     }
+%                     \foreach \i in {\yMin,2,...,\yMax} {
+%                         \draw [thick,gray] (\xMin,\i) -- (\xMax,\i) node [left] at (\xMin,\i) {};
+%                     }
             
-                    \node at (0.5, 3.5) {0};
-                    \node at (1.5, 3.5) {1};
-                    \node at (2.5, 3.5) {2};
-                    \node at (3.5, 3.5) {3};
-                    %
-                    \node at (0.5, 2.5) {4};
-                    \node at (1.5, 2.5) {5};
-                    \node at (2.5, 2.5) {6};
-                    \node at (3.5, 2.5) {7};
-                    %
-                    \node at (0.5, 1.5) {8};
-                    \node at (1.5, 1.5) {9};
-                    \node at (2.5, 1.5) {10};
-                    \node at (3.5, 1.5) {11};
-                    %
-                    \node at (0.5, 0.5) {12};
-                    \node at (1.5, 0.5) {13};
-                    \node at (2.5, 0.5) {14};
-                    \node at (3.5, 0.5) {15};
+%                     \node at (0.5, 3.5) {0};
+%                     \node at (1.5, 3.5) {1};
+%                     \node at (2.5, 3.5) {2};
+%                     \node at (3.5, 3.5) {3};
+%                     %
+%                     \node at (0.5, 2.5) {4};
+%                     \node at (1.5, 2.5) {5};
+%                     \node at (2.5, 2.5) {6};
+%                     \node at (3.5, 2.5) {7};
+%                     %
+%                     \node at (0.5, 1.5) {8};
+%                     \node at (1.5, 1.5) {9};
+%                     \node at (2.5, 1.5) {10};
+%                     \node at (3.5, 1.5) {11};
+%                     %
+%                     \node at (0.5, 0.5) {12};
+%                     \node at (1.5, 0.5) {13};
+%                     \node at (2.5, 0.5) {14};
+%                     \node at (3.5, 0.5) {15};
                 
-                    \foreach \i in {\xMinR,...,\xMaxR} {
-                        \draw [thick,gray] (\i,\yMinR) -- (\i,\yMaxR)  node [below] at (\i,\yMinR) {};
-                    }
-                    \foreach \i in {\yMinR,...,\yMaxR} {
-                        \draw [thick,gray] (\xMinR,\i) -- (\xMaxR,\i) node [left] at (\xMinR,\i) {};
-                    }
+%                     \foreach \i in {\xMinR,...,\xMaxR} {
+%                         \draw [thick,gray] (\i,\yMinR) -- (\i,\yMaxR)  node [below] at (\i,\yMinR) {};
+%                     }
+%                     \foreach \i in {\yMinR,...,\yMaxR} {
+%                         \draw [thick,gray] (\xMinR,\i) -- (\xMaxR,\i) node [left] at (\xMinR,\i) {};
+%                     }
                 
-                    \node at (5.4, 2.5) {2.5};
-                    \node at (6.4, 2.5) {4.5};
-                    %
-                    \node at (5.4, 1.5) {10.5};
-                    \node at (6.4, 1.5) {12.5};
+%                     \node at (5.4, 2.5) {2.5};
+%                     \node at (6.4, 2.5) {4.5};
+%                     %
+%                     \node at (5.4, 1.5) {10.5};
+%                     \node at (6.4, 1.5) {12.5};
                 
-                    \draw [decorate,decoration={brace,amplitude=4pt},xshift=-2pt,yshift=0pt]
-                        (0,2) -- (0,4) node [black,midway,xshift=-0.3cm] {\footnotesize $2$};
+%                     \draw [decorate,decoration={brace,amplitude=4pt},xshift=-2pt,yshift=0pt]
+%                         (0,2) -- (0,4) node [black,midway,xshift=-0.3cm] {\footnotesize $2$};
                 
-                    \draw [decorate,decoration={brace,amplitude=4pt},xshift=0pt,yshift=2pt]
-                        (0,4) -- (2,4) node [black,midway,yshift=+0.3cm] {\footnotesize $2$};
-                \end{tikzpicture}
-                \label{fig:average-pooling}
-            \end{figure}
-    \end{itemize}
-\end{frame}
+%                     \draw [decorate,decoration={brace,amplitude=4pt},xshift=0pt,yshift=2pt]
+%                         (0,4) -- (2,4) node [black,midway,yshift=+0.3cm] {\footnotesize $2$};
+%                 \end{tikzpicture}
+%                 \label{fig:average-pooling}
+%             \end{figure}
+%     \end{itemize}
+% \end{frame}
