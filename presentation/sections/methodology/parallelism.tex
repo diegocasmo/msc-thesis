@@ -1,23 +1,23 @@
-\begin{frame}{Parallelism}
-    \begin{itemize}
-        \item[\xspace]
-            \begin{algorithm}[H]
-                \SetAlgoLined
-                \SetKwProg{FMain}{generate\_candidate\_parallel}{:}{end}
-                    \FMain{} {
-                        \For{$t = 0, 1, 2, ...$} {
-                            Select a set of \texttt{missions} to crawl \\
-                            Split \texttt{missions} among the number of available processors \\
-                            Process each \texttt{missions}' ``chunk'' in parallel \\
-                            Reduce each parallel job results \\
-                            Select \texttt{mission} with $\text{min}(v)$ as \texttt{candidate} \\
-                            \Return \texttt{candidate}
-                        }
-                    }
-                \caption{Slightly modified pseudo--code of the basic \newline 
-                building block of the \mlblink algorithm to allow for \newline
-                parallel processing.}
-                \label{pscode:ml-blink:parallel}
-            \end{algorithm}
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Parallelism}
+%     \begin{itemize}
+%         \item[\xspace]
+%             \begin{algorithm}[H]
+%                 \SetAlgoLined
+%                 \SetKwProg{FMain}{generate\_candidate\_parallel}{:}{end}
+%                     \FMain{} {
+%                         \For{$t = 0, 1, 2, ...$} {
+%                             Select a set of \texttt{missions} to crawl \\
+%                             Split \texttt{missions} among the number of available processors \\
+%                             Process each \texttt{missions}' ``chunk'' in parallel \\
+%                             Reduce each parallel job results \\
+%                             Select \texttt{mission} with $\text{min}(v)$ as \texttt{candidate} \\
+%                             \Return \texttt{candidate}
+%                         }
+%                     }
+%                 \caption{Slightly modified pseudo--code of the basic \newline 
+%                 building block of the \mlblink algorithm to allow for \newline
+%                 parallel processing.}
+%                 \label{pscode:ml-blink:parallel}
+%             \end{algorithm}
+%     \end{itemize}
+% \end{frame}
