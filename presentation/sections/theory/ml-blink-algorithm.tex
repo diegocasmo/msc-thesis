@@ -57,20 +57,20 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{ML-Blink Algorithm}
-    \begin{itemize}
-        \item Equation $v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j$ can also be implicitly represented
-        \item Update rule can be re--written as 
-            \begin{equation} \nonumber
-                \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
-            \end{equation}
-        \item Using the implicit representation of $\vect{D}$
-            \begin{equation} \label{eq:v-implicit}
-                \begin{split}
-                    v &= \vect{x}_i^T \vect{D} \vect{y}_j \\
-                    &= \vect{x}_i^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_j \\
-                    &= ( x_i^T \cdot v_1 )  ( w_1^T \cdot y_j ) + \cdots + ( x_i^T \cdot v_n )  ( w_n^T \cdot y_j ) \\
-                \end{split}
-            \end{equation}
-    \end{itemize}
-\end{frame}
+% \begin{frame}{ML-Blink Algorithm}
+%     \begin{itemize}
+%         \item Equation $v = \vect{x}_{i}^{T} \vect{D} \vect{y}_j$ can also be implicitly represented
+%         \item Update rule can be re--written as 
+%             \begin{equation} \nonumber
+%                 \vect{D} = \sum_{i \in A} \vect{v}_i \vect{w}_i^T
+%             \end{equation}
+%         \item Using the implicit representation of $\vect{D}$
+%             \begin{equation} \label{eq:v-implicit}
+%                 \begin{split}
+%                     v &= \vect{x}_i^T \vect{D} \vect{y}_j \\
+%                     &= \vect{x}_i^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_j \\
+%                     &= ( x_i^T \cdot v_1 )  ( w_1^T \cdot y_j ) + \cdots + ( x_i^T \cdot v_n )  ( w_n^T \cdot y_j ) \\
+%                 \end{split}
+%             \end{equation}
+%     \end{itemize}
+% \end{frame}

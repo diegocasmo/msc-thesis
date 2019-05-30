@@ -1,40 +1,40 @@
-\begin{frame}{Implicit Representation}
-    \begin{itemize}
-        \item[\xspace]
-            \begin{algorithm}[H]
-                \SetAlgoLined
-                \SetKwProg{FMain}{compute\_v\_implicit}{:}{end}
-                    \FMain{$i$, $j$} {
-                        Let $i$ be an image key, and $j$ be an image band \\
-                        Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
-                        Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
-                        Retrieve all members of the active set $A$ \\
-                        Compute $v = \vect{x}_{i,j}^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_{i,j}$ \\
-                        \Return $v$
-                    }
-                \caption{Pseudo--code for computing the value $v$ \newline 
-                for a mission setup using the implicit definition of the \newline
-                matrix $\vect{D}$.}
-                \label{pscode:compute-v:implicit}
-            \end{algorithm}
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Implicit Representation}
+%     \begin{itemize}
+%         \item[\xspace]
+%             \begin{algorithm}[H]
+%                 \SetAlgoLined
+%                 \SetKwProg{FMain}{compute\_v\_implicit}{:}{end}
+%                     \FMain{$i$, $j$} {
+%                         Let $i$ be an image key, and $j$ be an image band \\
+%                         Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+%                         Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
+%                         Retrieve all members of the active set $A$ \\
+%                         Compute $v = \vect{x}_{i,j}^T (\ \sum_{i \in A} \vect{v}_i \vect{w}_i^T )\ \vect{y}_{i,j}$ \\
+%                         \Return $v$
+%                     }
+%                 \caption{Pseudo--code for computing the value $v$ \newline 
+%                 for a mission setup using the implicit definition of the \newline
+%                 matrix $\vect{D}$.}
+%                 \label{pscode:compute-v:implicit}
+%             \end{algorithm}
+%     \end{itemize}
+% \end{frame}
 
-\begin{frame}{Implicit Representation}
-    \begin{itemize}
-        \item[\xspace]
-            \begin{algorithm}[H]
-                \SetAlgoLined
-                \SetKwProg{FMain}{update\_d\_implicit}{:}{end}
-                    \FMain{$i$, $j$} {
-                        Let $i$ be an image key, and $j$ be an image band \\
-                        Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
-                        Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
-                        $A \gets A + \vect{x}_{i,j}\vect{y}_{i,j}^T$ \\
-                    }
-                \caption{Pseudo--code for updating the implicit \newline 
-                representation of the matrix $\vect{D}$.}
-                \label{pscode:update-d:implicit}
-            \end{algorithm}
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Implicit Representation}
+%     \begin{itemize}
+%         \item[\xspace]
+%             \begin{algorithm}[H]
+%                 \SetAlgoLined
+%                 \SetKwProg{FMain}{update\_d\_implicit}{:}{end}
+%                     \FMain{$i$, $j$} {
+%                         Let $i$ be an image key, and $j$ be an image band \\
+%                         Retrieve image $\vect{x}_{i,j}$ according to $i$, $j$ from \usno \\
+%                         Retrieve image $\vect{y}_{i,j}$ according to $i$, $j$ from \panstarrs \\
+%                         $A \gets A + \vect{x}_{i,j}\vect{y}_{i,j}^T$ \\
+%                     }
+%                 \caption{Pseudo--code for updating the implicit \newline 
+%                 representation of the matrix $\vect{D}$.}
+%                 \label{pscode:update-d:implicit}
+%             \end{algorithm}
+%     \end{itemize}
+% \end{frame}
