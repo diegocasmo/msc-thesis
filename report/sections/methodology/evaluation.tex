@@ -20,7 +20,7 @@ Before diving into the ROC curve, let us first define a confusion matrix in term
     \label{table:confusion-matrix}
 \end{table}
 
-The ROC curve is defined as the a plot of the true positive rate (TPR) against the false positive rate (FPR). The TPR is defined as in equation \ref{eq:tpr}, where TP corresponds to the true positives (top--left quadrant of the confusion matrix in table \ref{table:confusion-matrix}), and P (positives) is the total number of real anomalies in the dataset. The FPR formula is shown in equation \ref{eq:fpr}, where FP represents the false positive (top--right quadrant in table \ref{table:confusion-matrix}), and N (negatives) is the real number of non--anomalies in the dataset.
+The ROC curve is defined as the a plot of the true positive rate (TPR) against the false positive rate (FPR). The TPR is defined as in equation \ref{eq:tpr}, where TP corresponds to the total number of true positives (top--left quadrant of the confusion matrix in table \ref{table:confusion-matrix}), and P (positives) is the total number of real anomalies in the dataset. The FPR formula is shown in equation \ref{eq:fpr}, where FP represents the false positive (top--right quadrant in table \ref{table:confusion-matrix}), and N (negatives) is the real number of non--anomalies in the dataset.
 
 \begin{equation} \label{eq:tpr}
     \text{TPR} = \dfrac{\text{TP}}{\text{P}}
